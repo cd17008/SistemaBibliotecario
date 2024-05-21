@@ -1,0 +1,17 @@
+.edit-icon{
+    color: green;
+}
+
+.detail-icon{
+    color:blue;
+}
+
+.delete-icon{
+    color:red;
+}
+
+.navbar{
+    text-align:center;
+    width: 100%;
+    padding: 0;
+}

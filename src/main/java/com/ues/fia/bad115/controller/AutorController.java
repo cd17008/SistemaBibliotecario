@@ -1,0 +1,31 @@
+package com.ues.fia.bad115.controller;
+
+import com.ues.fia.bad115.clase.Autor;
+import com.ues.fia.bad115.service.AutorService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+public class AutorController {
+    @Autowired
+    private AutorService service;
+
+    @PostMapping ("/addautor")
+    public Autor addAutor(@RequestBody Autor autor){
+        return service.saveAutor(autor);
+    }
+
+    @GetMapping("/autor")
+    public List<Autor> findAllAutores(){
+        return service.getAutores();
+    }
+
+    @DeleteMapping("/delautor/{id}")
+    public String deleteAutor (@PathVariable int id){
+        return service.deleteAutor(id);
+    }
+
+
+}
