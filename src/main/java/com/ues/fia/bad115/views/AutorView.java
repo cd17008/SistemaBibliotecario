@@ -28,8 +28,6 @@ public class AutorView extends VerticalLayout {
     NavBar navegacion = new NavBar();
 
 
-
-
     public AutorView(AutorService autorService){
         this.autorService = autorService;
         List<Autor> autores = autorService.getAutores();
