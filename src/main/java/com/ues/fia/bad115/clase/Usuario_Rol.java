@@ -8,7 +8,6 @@ public class Usuario_Rol {
     @Id
     @Column(name="idusuario")
     private int idusuario;
-    @Id
     @Column(name="idrol")
     private int idrol;
 
