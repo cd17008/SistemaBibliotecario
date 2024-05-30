@@ -3,6 +3,7 @@ package com.ues.fia.bad115.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.ues.fia.bad115.clase.Mora;
+import com.ues.fia.bad115.clase.Prestamo;
 import com.ues.fia.bad115.service.MoraService;
 
 import java.util.List;
@@ -34,7 +35,9 @@ public class MoraController {
 
     @GetMapping("/mora/idprestamo/{idprestamo}")
     public Mora findMorasByIdprestamo(@PathVariable int idprestamo) {
-        return service.findMorasByIdprestamo(idprestamo);
+        Prestamo prestamo = new Prestamo();
+        prestamo.setId(idprestamo);
+        return service.findMorasByPrestamo(prestamo);
     }
 
     @GetMapping("/mora/estado/{estado}")

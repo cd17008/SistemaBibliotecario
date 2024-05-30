@@ -1,6 +1,8 @@
 package com.ues.fia.bad115.repository;
 
 import com.ues.fia.bad115.clase.Prestamo;
+import com.ues.fia.bad115.clase.Recurso;
+import com.ues.fia.bad115.clase.Usuario;
 
 import java.sql.Date;
 
@@ -11,9 +13,9 @@ import org.springframework.stereotype.Repository;
 public interface PrestamoRepository extends JpaRepository<Prestamo, Long> {
     Prestamo findById(int id);
 
-    Prestamo findByMiembro(int miembro);
+    Prestamo findByUsuario(Usuario usuario);
 
-    Prestamo findByRecurso(String recurso);
+    Prestamo findByRecurso(Recurso recurso);
 
     Prestamo findByFecha(Date fecha);
 

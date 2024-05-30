@@ -3,23 +3,26 @@ package com.ues.fia.bad115.clase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.JoinColumn;
 
 import java.util.Date;
 
 @Entity
-@Table(name="Mora")
+@Table(name = "Mora")
 public class Mora {
     @Id
-    @Column(name="idmora")
+    @Column(name = "idmora")
     private int id;
-    @Column(name="cantidad")
+    @Column(name = "cantidad")
     private float cantidad;
-    @Column(name="idprestamo")
-    private int idprestamo;
-    @Column(name="estadomora")
+    @ManyToOne
+    @JoinColumn(name = "idprestamo")
+    private Prestamo prestamo;
+    @Column(name = "estadomora")
     private int estado;
-    @Column(name="fechamora")
+    @Column(name = "fechamora")
     private Date fechamora;
 
     public int getId() {
@@ -38,12 +41,12 @@ public class Mora {
         this.cantidad = cantidad;
     }
 
-    public int getIdprestamo() {
-        return idprestamo;
+    public Prestamo getIdprestamo() {
+        return prestamo;
     }
 
-    public void setIdprestamo(int idprestamo) {
-        this.idprestamo = idprestamo;
+    public void setIdprestamo(Prestamo prestamo) {
+        this.prestamo = prestamo;
     }
 
     public int getEstado() {

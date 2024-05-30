@@ -3,6 +3,7 @@ package com.ues.fia.bad115.clase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 import java.util.Date;
@@ -17,6 +18,9 @@ public class Carnet {
     private Date creacion;
     @Column(name = "estado")
     private int estado;
+
+    @OneToOne(mappedBy = "carnet")
+    private Usuario usuario;
 
     public String getId() {
         return id;
@@ -40,6 +44,14 @@ public class Carnet {
 
     public void setEstado(int estado) {
         this.estado = estado;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
 }

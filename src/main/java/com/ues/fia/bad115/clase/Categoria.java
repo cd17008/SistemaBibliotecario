@@ -62,4 +62,12 @@ public class Categoria {
     public void setDisponible(int disponible) {
         this.disponible = disponible;
     }
+
+    public List<Subcategoria> getSubcategorias() {
+        return subcategorias;
+    }
+
+    public void setSubcategorias(List<Subcategoria> subcategorias) {
+        this.subcategorias = subcategorias;
+    }
 }

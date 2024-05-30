@@ -3,13 +3,14 @@ package com.ues.fia.bad115.clase;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="Usuario_Rol")
+@Table(name = "Usuario_Rol")
 public class Usuario_Rol {
     @Id
-    @Column(name="idusuario")
+    @Column(name = "idusuario")
     private int idusuario;
-    @Column(name="idrol")
-    private int idrol;
+    @ManyToOne
+    @JoinColumn(name = "idrol")
+    private Rol rol;
 
     public int getIdusuario() {
         return idusuario;
@@ -19,12 +20,12 @@ public class Usuario_Rol {
         this.idusuario = idusuario;
     }
 
-    public int getIdrol() {
-        return idrol;
+    public Rol getIdrol() {
+        return rol;
     }
 
-    public void setIdrol(int idrol) {
-        this.idrol = idrol;
+    public void setIdrol(Rol rol) {
+        this.rol = rol;
     }
-    
+
 }

@@ -3,6 +3,8 @@ package com.ues.fia.bad115.clase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import java.util.Date;
@@ -21,8 +23,9 @@ public class Transaccion {
     private String tipo;
     @Column(name = "descripciontrans")
     private String descripcion;
-    @Column(name = "idusuario")
-    private int idusuario;
+    @ManyToOne
+    @JoinColumn(name = "idusuario")
+    private Usuario usuario;
 
     public int getId() {
         return id;
@@ -64,12 +67,12 @@ public class Transaccion {
         this.descripcion = descripcion;
     }
 
-    public int getIdusuario() {
-        return idusuario;
+    public Usuario getIdusuario() {
+        return usuario;
     }
 
-    public void setIdusuario(int idusuario) {
-        this.idusuario = idusuario;
+    public void setIdusuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
 }

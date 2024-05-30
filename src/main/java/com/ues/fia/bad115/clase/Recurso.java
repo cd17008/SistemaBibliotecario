@@ -1,6 +1,7 @@
 package com.ues.fia.bad115.clase;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Recurso")
@@ -8,16 +9,20 @@ public class Recurso {
     @Id
     @Column(name = "idrecurso", nullable = true)
     private String id;
-    @Column(name = "idautor")
-    private int autor;//
+    @ManyToOne
+    @JoinColumn(name = "idautor")
+    private Autor autor;//
     @Column(name = "titulorecurso")
     private String titulo;//
-    @Column(name = "ididioma")
-    private int idioma;//
-    @Column(name = "IdEditorial")
-    private int editorial;
-    @Column(name = "Subcategoria")
-    private int subcategoria;//
+    @ManyToOne
+    @JoinColumn(name = "ididioma")
+    private Idioma idioma;//
+    @ManyToOne
+    @JoinColumn(name = "IdEditorial")
+    private Editorial editorial;
+    @ManyToOne
+    @JoinColumn(name = "Subcategoria")
+    private Subcategoria subcategoria;//
     @Column(name = "CantidadDisponible")
     private int cantidad;
     @Column(name = "Precio")
@@ -32,6 +37,9 @@ public class Recurso {
     @Column(name = "Publicacion")
     private int publicacion;
 
+    @OneToMany(mappedBy = "recurso")
+    private List<Prestamo> prestamos;
+
     public Recurso() {
     }
 
@@ -43,27 +51,27 @@ public class Recurso {
         this.id = id;
     }
 
-    public int getIdioma() {
+    public Idioma getIdioma() {
         return idioma;
     }
 
-    public void setIdioma(int idioma) {
+    public void setIdioma(Idioma idioma) {
         this.idioma = idioma;
     }
 
-    public int getAutor() {
+    public Autor getAutor() {
         return autor;
     }
 
-    public void setAutor(int autor) {
+    public void setAutor(Autor autor) {
         this.autor = autor;
     }
 
-    public int getSubcategoria() {
+    public Subcategoria getSubcategoria() {
         return subcategoria;
     }
 
-    public void setSubcategoria(int subcategoria) {
+    public void setSubcategoria(Subcategoria subcategoria) {
         this.subcategoria = subcategoria;
     }
 
@@ -115,11 +123,11 @@ public class Recurso {
         this.publicacion = publicacion;
     }
 
-    public int getEditorial() {
+    public Editorial getEditorial() {
         return editorial;
     }
 
-    public void setEditorial(int editorial) {
+    public void setEditorial(Editorial editorial) {
         this.editorial = editorial;
     }
 
@@ -129,6 +137,14 @@ public class Recurso {
 
     public void setPrecio(float precio) {
         this.precio = precio;
+    }
+
+    public List<Prestamo> getPrestamos() {
+        return prestamos;
+    }
+
+    public void setPrestamos(List<Prestamo> prestamos) {
+        this.prestamos = prestamos;
     }
 
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ues.fia.bad115.repository.TransaccionRepository;
 import com.ues.fia.bad115.clase.Transaccion;
+import com.ues.fia.bad115.clase.Usuario;
 
 import java.util.Date;
 import java.util.List;
@@ -35,7 +36,9 @@ public class TransaccionService {
     }
 
     public List<Transaccion> getTransaccionIdUsuario(int idusuario) {
-        return repository.findByIdusuario(idusuario);
+        Usuario usuario = new Usuario();
+        usuario.setId(idusuario);
+        return repository.findByUsuario(usuario);
     }
 
     public List<Transaccion> getTransaccionMontoMayor(float monto) {

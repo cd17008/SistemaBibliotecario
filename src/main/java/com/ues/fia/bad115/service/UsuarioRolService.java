@@ -3,6 +3,7 @@ package com.ues.fia.bad115.service;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.ues.fia.bad115.repository.UsuarioRolRepository;
+import com.ues.fia.bad115.clase.Rol;
 import com.ues.fia.bad115.clase.Usuario_Rol;
 import java.util.List;
 
@@ -21,7 +22,9 @@ public class UsuarioRolService {
     }
 
     public List<Usuario_Rol> getUsuarioRolIdUsuario(int idrol) {
-        return repository.findByIdrol(idrol);
+        Rol rol = new Rol();
+        rol.setId(idrol);
+        return repository.findByRol(rol);
     }
 
     // Métodos POST

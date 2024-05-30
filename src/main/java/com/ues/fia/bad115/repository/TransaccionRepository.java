@@ -1,6 +1,8 @@
 package com.ues.fia.bad115.repository;
 
 import com.ues.fia.bad115.clase.Transaccion;
+import com.ues.fia.bad115.clase.Usuario;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,7 +22,7 @@ public interface TransaccionRepository extends JpaRepository<Transaccion, Long> 
 
     List<Transaccion> findByMonto(float monto);
 
-    List<Transaccion> findByIdusuario(int idusuario);
+    List<Transaccion> findByUsuario(Usuario idusuario);
 
     @Query("SELECT t FROM Transaccion t WHERE t.monto >= :searchTerm")
     List<Transaccion> searchByMontoMayor(@Param("searchTerm") float searchTerm);

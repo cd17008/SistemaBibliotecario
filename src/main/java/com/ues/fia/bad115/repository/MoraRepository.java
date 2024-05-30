@@ -1,6 +1,7 @@
 package com.ues.fia.bad115.repository;
 
 import com.ues.fia.bad115.clase.Mora;
+import com.ues.fia.bad115.clase.Prestamo;
 
 import java.sql.Date;
 
@@ -17,7 +18,7 @@ public interface MoraRepository extends JpaRepository<Mora, Long> {
 
     Mora findByCantidad(float cantidad);
 
-    Mora findByIdprestamo(int idprestamo);
+    Mora findByPrestamo(Prestamo prestamo);
 
     Mora findByEstado(int estado);
 

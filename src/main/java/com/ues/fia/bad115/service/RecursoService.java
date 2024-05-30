@@ -45,10 +45,10 @@ public class RecursoService {
         if (newRecurso.getTitulo() != null) {
             recurso.setTitulo(newRecurso.getTitulo());
         }
-        if (newRecurso.getAutor() != 0) {
+        if (newRecurso.getAutor() != null) {
             recurso.setAutor(newRecurso.getAutor());
         }
-        if (newRecurso.getSubcategoria() != 0) {
+        if (newRecurso.getSubcategoria() != null) {
             recurso.setSubcategoria(newRecurso.getSubcategoria());
         }
         if (newRecurso.getDescripcion() != null) {

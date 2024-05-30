@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication(exclude = {
 		SecurityAutoConfiguration.class
-})
+}, scanBasePackages = {"com.ues.fia.bad115"})
 @EnableJpaRepositories("com.ues.fia.bad115.repository")
 @ComponentScan("com.ues.fia.bad115")
 @EntityScan("com.ues.fia.bad115.clase")

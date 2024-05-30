@@ -4,29 +4,41 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.JoinColumn;
+
+import java.util.List;
 
 @Entity
-@Table(name="Usuario")
+@Table(name = "Usuario")
 public class Usuario {
     @Id
-    @Column(name="idusuario")
+    @Column(name = "idusuario")
     private int id;
-    @Column(name="nombreusuario")
+    @Column(name = "nombreusuario")
     private String nombre;
-    @Column(name="apellidousuario")
+    @Column(name = "apellidousuario")
     private String apellido;
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
-    @Column(name="passwordusuario")
+    @Column(name = "passwordusuario")
     private String password;
-    @Column(name="activo")
+    @Column(name = "activo")
     private int activo;
-    @Column(name="carnet")
-    private String carnet;
-    @Column(name="tipousuario")
+    @OneToOne
+    @JoinColumn(name = "carnet")
+    private Carnet carnet;
+    @Column(name = "tipousuario")
     private String tipousuario;
-    @Column(name="telefono")
+    @Column(name = "telefono")
     private String telefono;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Prestamo> prestamos;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Transaccion> transacciones;
 
     public int getId() {
         return id;
@@ -76,11 +88,11 @@ public class Usuario {
         this.activo = activo;
     }
 
-    public String getCarnet() {
+    public Carnet getCarnet() {
         return carnet;
     }
 
-    public void setCarnet(String carnet) {
+    public void setCarnet(Carnet carnet) {
         this.carnet = carnet;
     }
 
@@ -99,4 +111,21 @@ public class Usuario {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+
+    public List<Prestamo> getPrestamos() {
+        return prestamos;
+    }
+
+    public void setPrestamos(List<Prestamo> prestamos) {
+        this.prestamos = prestamos;
+    }
+
+    public List<Transaccion> getTransacciones() {
+        return transacciones;
+    }
+
+    public void setTransacciones(List<Transaccion> transacciones) {
+        this.transacciones = transacciones;
+    }
+
 }

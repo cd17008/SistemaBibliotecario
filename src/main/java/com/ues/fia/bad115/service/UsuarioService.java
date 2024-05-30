@@ -2,7 +2,10 @@ package com.ues.fia.bad115.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.ues.fia.bad115.repository.UsuarioRepository;
+import com.ues.fia.bad115.clase.Carnet;
 import com.ues.fia.bad115.clase.Usuario;
 
 import java.util.List;
@@ -11,6 +14,9 @@ import java.util.List;
 public class UsuarioService {
     @Autowired
     private UsuarioRepository repository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     // Métodos GET
     public List<Usuario> getUsuarios() {
@@ -26,7 +32,9 @@ public class UsuarioService {
     }
 
     public Usuario getUsuarioByCarnet(String carnet) {
-        return (Usuario) repository.findByCarnet(carnet);
+        Carnet carnet1 = new Carnet();
+        carnet1.setId(carnet);
+        return (Usuario) repository.findByCarnet(carnet1);
     }
 
     public Usuario getUsuarioByNombre(String nombre) {
@@ -53,9 +61,9 @@ public class UsuarioService {
         return repository.searchByName(searchTerm);
     }
 
-
     // Métodos POST
     public Usuario saveUsuario(Usuario usuario) {
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         return (Usuario) repository.save(usuario);
     }
 
@@ -94,6 +102,17 @@ public class UsuarioService {
     public String deleteUsuario(int id) {
         repository.deleteById((long) id);
         return "Usuario eliminado correctamente: " + id;
+    }
+
+    // Validacion
+    public boolean validarUsuario(Usuario usuario) {
+        Usuario usuario1 = (Usuario) repository.findByEmail(usuario.getEmail());
+        if (usuario1 != null) {
+            if (passwordEncoder.matches(usuario.getPassword(), usuario1.getPassword())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

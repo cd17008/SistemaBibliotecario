@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.ues.fia.bad115.repository.MoraRepository;
 import com.ues.fia.bad115.clase.Mora;
+import com.ues.fia.bad115.clase.Prestamo;
 
 import java.util.List;
 
@@ -25,8 +26,8 @@ public class MoraService {
         return repository.findByCantidad(cantidad);
     }
 
-    public Mora findMorasByIdprestamo(int idprestamo) {
-        return repository.findByIdprestamo(idprestamo);
+    public Mora findMorasByPrestamo(Prestamo prestamo) {
+        return repository.findByPrestamo(prestamo);
     }
 
     public Mora findMorasByEstado(int estado) {
