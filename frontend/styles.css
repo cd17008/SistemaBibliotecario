@@ -16,13 +16,28 @@
     padding: 0;
 }
 
-.login{
+.login-box{
     text-align:center;
     justify-self: center;
     align-self:center;
+    border: 1px white;
 }
 
-.center{
+.login{
+    background-color:#1c2738;
+    text-align:center;
+    justify-items:center;
+    align-items:center;
+    width:100%;
+    height: 100%;
+    padding:0;
+    color:white;
+    
+}
+
+.titulo{
     text-align:center;
     width: 100%;
+    color: white;
+    padding: 3%;
 }

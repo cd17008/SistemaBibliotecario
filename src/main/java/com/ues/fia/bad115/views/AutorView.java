@@ -1,6 +1,5 @@
 package com.ues.fia.bad115.views;
 
-
 import com.ues.fia.bad115.clase.Autor;
 import com.ues.fia.bad115.component.NavBar;
 import com.ues.fia.bad115.service.AutorService;
@@ -11,68 +10,79 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-
 import java.util.List;
+import java.util.Arrays;
 
-@Route(value="autores")
-@PageTitle(value = "Autores|Biblioteca Central de Centro America")
+@Route(value = "autores")
+@PageTitle(value = "Autores | Biblioteca Central de Centro America")
 public class AutorView extends VerticalLayout {
     private AutorService autorService;
     Grid<Autor> tablaAutores = new Grid<>(Autor.class);
     TextField campoBusqueda = new TextField();
     NavBar navegacion = new NavBar();
 
-
-    public AutorView(AutorService autorService){
+    public AutorView(AutorService autorService) {
+        setClassName("login");
         this.autorService = autorService;
         List<Autor> autores = autorService.getAutores();
-        ListDataProvider<Autor> lista = new ListDataProvider<>(autores);
+        H1 subtitulo = new H1("Autores");
+        subtitulo.getStyle().setColor("white");
+        add(navegacion, subtitulo);
 
-        add(navegacion, new H1("Autores"));
-
-        tablaAutores.setItems(autores);
-        tablaAutores.setColumnOrder(tablaAutores.getColumnByKey("id"),
+        List<Grid.Column<Autor>> columnas = Arrays.asList(
+                tablaAutores.getColumnByKey("id"),
                 tablaAutores.getColumnByKey("nombre"),
                 tablaAutores.getColumnByKey("apellido"),
+                tablaAutores.getColumnByKey("pseudonimo"),
                 tablaAutores.getColumnByKey("pais"));
+        Grid.Column<Autor> idColumn = tablaAutores.getColumnByKey("id");
+        idColumn.setVisible(false);
+        tablaAutores.setItems(autores);
+        tablaAutores.setColumnOrder(columnas);
         tablaAutores.addComponentColumn(autor -> {
             Icon editar = new Icon(VaadinIcon.EDIT);
-            editar.setColor("green");
+
             Icon detalles = new Icon(VaadinIcon.LIST_UL);
-            detalles.setColor("blue");
+
             Icon eliminar = new Icon(VaadinIcon.TRASH);
-            eliminar.setColor("red");
+
             HorizontalLayout layoutBotones = new HorizontalLayout();
             layoutBotones.add(detalles, editar, eliminar);
 
             return layoutBotones;
         }).setHeader("Acciones").setAutoWidth(true);
-
-        add(busqueda(),tablaAutores);
+        tablaAutores.getElement().getThemeList().add("dark");
+        tablaAutores.getElement().getStyle().setWidth("80%");
+        tablaAutores.getStyle().set("align-self", "center");
+        tablaAutores.getStyle().setMargin("3%");
+        add(busqueda(), tablaAutores);
         actulizarTabla();
     }
 
-    private HorizontalLayout busqueda(){
+    private HorizontalLayout busqueda() {
         campoBusqueda.setPlaceholder("Escribe un nombre");
         campoBusqueda.setValueChangeMode(ValueChangeMode.LAZY);
-        campoBusqueda.addValueChangeListener(event ->actulizarTabla());
-
+        campoBusqueda.addValueChangeListener(event -> actulizarTabla());
+        campoBusqueda.getStyle().setBorder("1px solid #ccc");
+        campoBusqueda.getStyle().set("border-radius", "5px");
+        campoBusqueda.getStyle().setBackgroundColor("white");
         Icon vaciar = new Icon(VaadinIcon.CLOSE_CIRCLE_O);
 
-        vaciar.addClickListener(e->limpiar());
+        vaciar.addClickListener(e -> limpiar());
 
-        var buscar = new HorizontalLayout(campoBusqueda,vaciar);
+        var buscar = new HorizontalLayout(campoBusqueda, vaciar);
         return buscar;
     }
-    private void actulizarTabla(){
+
+    private void actulizarTabla() {
         tablaAutores.setItems(autorService.findAutores(campoBusqueda.getValue()));
     }
-    private void limpiar(){
+
+    private void limpiar() {
         campoBusqueda.clear();
     }
 }

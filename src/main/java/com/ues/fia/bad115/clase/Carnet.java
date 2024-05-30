@@ -8,15 +8,23 @@ import jakarta.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name="Carnet")
+@Table(name = "Carnet")
 public class Carnet {
     @Id
-    @Column(name="carnetid")
-    private int id;
-    @Column(name="creacion")
+    @Column(name = "idcarnet")
+    private String id;
+    @Column(name = "fechaexpedicion")
     private Date creacion;
-    @Column(name="expiracion")
-    private Date expiracion;
+    @Column(name = "estado")
+    private int estado;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Date getCreacion() {
         return creacion;
@@ -26,19 +34,12 @@ public class Carnet {
         this.creacion = creacion;
     }
 
-    public int getId() {
-        return id;
+    public int getEstado() {
+        return estado;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setEstado(int estado) {
+        this.estado = estado;
     }
 
-    public Date getExpiracion() {
-        return expiracion;
-    }
-
-    public void setExpiracion(Date expiracion) {
-        this.expiracion = expiracion;
-    }
 }

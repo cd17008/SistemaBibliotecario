@@ -1,36 +1,29 @@
 package com.ues.fia.bad115.clase;
 
-import jakarta.persistence.GenerationType;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-import java.util.List;
-
 @Entity
-@Table(name = "Categoria")
-public class Categoria {
-    // Atributos
+@Table(name = "Subcategoria")
+public class Subcategoria {
     @Id
-    @Column(name = "idcategoria")
+    @Column(name = "idsubcat")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "nombrecat")
+    @Column(name = "nombresubcat")
     private String nombre;
-    @Column(name = "disponiblecat")
-    private int disponible;
-    @Column(name = "descripcioncat")
+    @Column(name = "descripcionsubcat")
     private String descripcion;
+    @ManyToOne
+    @JoinColumn(name = "categoria", nullable = false)
+    private Categoria categoria;
 
-    // Relaciones
-    @OneToMany(mappedBy = "categoria")
-    private List<Subcategoria> subcategorias;
-
-    // Getters y Setters
     public int getId() {
         return id;
     }
@@ -55,11 +48,12 @@ public class Categoria {
         this.descripcion = descripcion;
     }
 
-    public int getDisponible() {
-        return disponible;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public void setDisponible(int disponible) {
-        this.disponible = disponible;
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
+
 }

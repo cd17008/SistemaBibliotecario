@@ -3,19 +3,19 @@ package com.ues.fia.bad115.clase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.GenerationType;
 
 @Entity
-@Table(name = "Idioma")
-public class Idioma {
+@Table(name = "Rol")
+public class Rol {
     @Id
-    @Column(name = "ididioma")
+    @Column(name = "idrol")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "idioma")
-    private String idioma;
+    @Column(name = "rol")
+    private String rol;
 
     public int getId() {
         return id;
@@ -25,11 +25,12 @@ public class Idioma {
         this.id = id;
     }
 
-    public String getIdioma() {
-        return idioma;
+    public String getRol() {
+        return rol;
     }
 
-    public void setIdioma(String idioma) {
-        this.idioma = idioma;
+    public void setRol(String rol) {
+        this.rol = rol;
     }
+    
 }

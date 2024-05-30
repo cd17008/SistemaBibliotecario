@@ -9,16 +9,24 @@ import jakarta.persistence.Table;
 @Table(name="Usuario")
 public class Usuario {
     @Id
-    @Column(name="usuarioid")
+    @Column(name="idusuario")
     private int id;
-    @Column(name="nombre")
+    @Column(name="nombreusuario")
     private String nombre;
-    @Column(name="apellido")
+    @Column(name="apellidousuario")
     private String apellido;
     @Column(name="email")
     private String email;
-    @Column(name="password")
+    @Column(name="passwordusuario")
     private String password;
+    @Column(name="activo")
+    private int activo;
+    @Column(name="carnet")
+    private String carnet;
+    @Column(name="tipousuario")
+    private String tipousuario;
+    @Column(name="telefono")
+    private String telefono;
 
     public int getId() {
         return id;
@@ -58,5 +66,37 @@ public class Usuario {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getActivo() {
+        return activo;
+    }
+
+    public void setActivo(int activo) {
+        this.activo = activo;
+    }
+
+    public String getCarnet() {
+        return carnet;
+    }
+
+    public void setCarnet(String carnet) {
+        this.carnet = carnet;
+    }
+
+    public String getTipousuario() {
+        return tipousuario;
+    }
+
+    public void setTipousuario(String tipousuario) {
+        this.tipousuario = tipousuario;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 }

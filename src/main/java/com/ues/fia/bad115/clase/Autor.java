@@ -2,21 +2,26 @@ package com.ues.fia.bad115.clase;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.GenerationType;
 
 @Entity
-@Table(name="Autor")
+@Table(name = "Autor")
 public class Autor {
     @Id
-    @Column(name="autorid")
+    @Column(name = "idautor")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name="nombre")
+    @Column(name = "nombre")
     private String nombre;
-    @Column(name="apellido")
+    @Column(name = "apellido")
     private String apellido;
-    @Column (name="nacionalidad")
+    @Column(name = "pais")
     private String pais;
+    @Column(name = "pseudonimo")
+    private String pseudonimo;
 
     public long getId() {
         return id;
@@ -48,5 +53,13 @@ public class Autor {
 
     public void setPais(String pais) {
         this.pais = pais;
+    }
+
+    public String getPseudonimo() {
+        return pseudonimo;
+    }
+
+    public void setPseudonimo(String pseudonimo) {
+        this.pseudonimo = pseudonimo;
     }
 }

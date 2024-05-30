@@ -8,19 +8,21 @@ import jakarta.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name="Transaccion")
+@Table(name = "Transaccion")
 public class Transaccion {
     @Id
-    @Column(name="transaccionid")
+    @Column(name = "idtransaccion")
     private int id;
-    @Column(name="fecha")
+    @Column(name = "fechatrans")
     private Date fecha;
-    @Column(name="monto")
+    @Column(name = "cantidadtrans")
     private float monto;
-    @Column(name="tipo")
+    @Column(name = "tipotrans")
     private String tipo;
-    @Column(name="descripcion")
+    @Column(name = "descripciontrans")
     private String descripcion;
+    @Column(name = "idusuario")
+    private int idusuario;
 
     public int getId() {
         return id;
@@ -61,4 +63,13 @@ public class Transaccion {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+    public int getIdusuario() {
+        return idusuario;
+    }
+
+    public void setIdusuario(int idusuario) {
+        this.idusuario = idusuario;
+    }
+
 }

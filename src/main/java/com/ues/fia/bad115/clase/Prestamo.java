@@ -8,21 +8,19 @@ import jakarta.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name="Prestamo")
+@Table(name = "Prestamo")
 public class Prestamo {
     @Id
-    @Column(name="prestamoid")
+    @Column(name = "idprestamo")
     private int id;
-    @Column(name="miembroid")
+    @Column(name = "idusuario")
     private int miembro;
-    @Column(name="recursoid")
+    @Column(name = "idrecurso")
     private String recurso;
-    @Column(name="fechaprestamo")
-    private Date prestamo;
-    @Column(name="fechadevolucion")
-    private Date devolucion;
-    @Column(name="estado")
-    private String estado;
+    @Column(name = "fechaprestamo")
+    private Date fecha;
+    @Column(name = "estadoprestamo")
+    private int estado;
 
     public int getId() {
         return id;
@@ -48,27 +46,20 @@ public class Prestamo {
         this.recurso = recurso;
     }
 
-    public Date getPrestamo() {
-        return prestamo;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setPrestamo(Date prestamo) {
-        this.prestamo = prestamo;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
-    public Date getDevolucion() {
-        return devolucion;
-    }
-
-    public void setDevolucion(Date devolucion) {
-        this.devolucion = devolucion;
-    }
-
-    public String getEstado() {
+    public int getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(int estado) {
         this.estado = estado;
     }
+
 }

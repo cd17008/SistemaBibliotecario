@@ -3,26 +3,37 @@ package com.ues.fia.bad115.clase;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="Recurso")
+@Table(name = "Recurso")
 public class Recurso {
     @Id
-    @Column(name="RecursoId")
+    @Column(name = "idrecurso", nullable = true)
     private String id;
-    @Column(name="IdiomaId")
-    private String idioma;
-    @Column(name="AutorId")
-    private int autor;
-    @Column(name="CategoryId")
-    private int categoria;
-    @Column(name="Titulo")
-    private String titulo;
-    @Column(name="Descripcion")
-    private String descripcion;
-    @Column(name="Cantidad")
+    @Column(name = "idautor")
+    private int autor;//
+    @Column(name = "titulorecurso")
+    private String titulo;//
+    @Column(name = "ididioma")
+    private int idioma;//
+    @Column(name = "IdEditorial")
+    private int editorial;
+    @Column(name = "Subcategoria")
+    private int subcategoria;//
+    @Column(name = "CantidadDisponible")
     private int cantidad;
+    @Column(name = "Precio")
+    private float precio;
+    @Column(name = "DescripcionRecurso")
+    private String descripcion;//
     @Lob
-    @Column(name="Cover")
+    @Column(name = "portada")
     private byte[] cover;
+    @Column(name = "Calificacion")
+    private float calificacion;
+    @Column(name = "Publicacion")
+    private int publicacion;
+
+    public Recurso() {
+    }
 
     public String getId() {
         return id;
@@ -32,11 +43,11 @@ public class Recurso {
         this.id = id;
     }
 
-    public String getIdioma() {
+    public int getIdioma() {
         return idioma;
     }
 
-    public void setIdioma(String idioma) {
+    public void setIdioma(int idioma) {
         this.idioma = idioma;
     }
 
@@ -48,12 +59,12 @@ public class Recurso {
         this.autor = autor;
     }
 
-    public int getCategoria() {
-        return categoria;
+    public int getSubcategoria() {
+        return subcategoria;
     }
 
-    public void setCategoria(int categoria) {
-        this.categoria = categoria;
+    public void setSubcategoria(int subcategoria) {
+        this.subcategoria = subcategoria;
     }
 
     public String getTitulo() {
@@ -87,4 +98,37 @@ public class Recurso {
     public void setCover(byte[] cover) {
         this.cover = cover;
     }
+
+    public float getCalificacion() {
+        return calificacion;
+    }
+
+    public void setCalificacion(float calificacion) {
+        this.calificacion = calificacion;
+    }
+
+    public int getPublicacion() {
+        return publicacion;
+    }
+
+    public void setPublicacion(int publicacion) {
+        this.publicacion = publicacion;
+    }
+
+    public int getEditorial() {
+        return editorial;
+    }
+
+    public void setEditorial(int editorial) {
+        this.editorial = editorial;
+    }
+
+    public float getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(float precio) {
+        this.precio = precio;
+    }
+
 }

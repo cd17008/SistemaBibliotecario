@@ -11,22 +11,16 @@ import java.util.Date;
 @Table(name="Mora")
 public class Mora {
     @Id
-    @Column(name="moraid")
+    @Column(name="idmora")
     private int id;
-    @Column(name="prestamoid")
-    private int prestamo;
-    @Column(name="fecha")
-    private Date fecha;
-    @Column(name="monto")
-    private float monto;
-
-    public int getPrestamo() {
-        return prestamo;
-    }
-
-    public void setPrestamo(int prestamo) {
-        this.prestamo = prestamo;
-    }
+    @Column(name="cantidad")
+    private float cantidad;
+    @Column(name="idprestamo")
+    private int idprestamo;
+    @Column(name="estadomora")
+    private int estado;
+    @Column(name="fechamora")
+    private Date fechamora;
 
     public int getId() {
         return id;
@@ -36,19 +30,36 @@ public class Mora {
         this.id = id;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public float getCantidad() {
+        return cantidad;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setCantidad(float cantidad) {
+        this.cantidad = cantidad;
     }
 
-    public float getMonto() {
-        return monto;
+    public int getIdprestamo() {
+        return idprestamo;
     }
 
-    public void setMonto(float monto) {
-        this.monto = monto;
+    public void setIdprestamo(int idprestamo) {
+        this.idprestamo = idprestamo;
     }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
+    public Date getFechamora() {
+        return fechamora;
+    }
+
+    public void setFechamora(Date fechamora) {
+        this.fechamora = fechamora;
+    }
+
 }
