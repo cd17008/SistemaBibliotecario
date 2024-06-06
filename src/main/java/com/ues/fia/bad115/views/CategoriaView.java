@@ -1,8 +1,8 @@
 package com.ues.fia.bad115.views;
 
-import com.ues.fia.bad115.clase.Autor;
+import com.ues.fia.bad115.clase.Categoria;
 import com.ues.fia.bad115.component.NavBar;
-import com.ues.fia.bad115.service.AutorService;
+import com.ues.fia.bad115.service.CategoriaService;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.Icon;
@@ -15,47 +15,42 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-import java.util.List;
 import java.util.Arrays;
+import java.util.List;
 
-@Route("autores")
+@Route("categorias")
 
-@PageTitle(value = "Autores | Biblioteca Central de Centro America")
-public class AutorView extends VerticalLayout {
-    private AutorService autorService;
-    Grid<Autor> tablaAutores = new Grid<>(Autor.class);
+@PageTitle(value = "Categorías | Biblioteca Central de Centro America")
+public class CategoriaView extends VerticalLayout {
+    private CategoriaService categoriaService;
+    Grid<Categoria> tablaCategorias = new Grid<>(Categoria.class);
     TextField campoBusqueda = new TextField();
     NavBar navegacion = new NavBar();
 
-    public AutorView(AutorService autorService) {
+    public CategoriaView(CategoriaService categoriaService) {
         setClassName("login");
-        this.autorService = autorService;
-        List<Autor> autores = autorService.getAutores();
-        H1 subtitulo = new H1("Autores");
+        this.categoriaService = categoriaService;
+        List<Categoria> categorias = categoriaService.getCategorias();
+        H1 subtitulo = new H1("Categorías");
         subtitulo.getStyle().setColor("white");
         add(navegacion, subtitulo);
 
-        List<Grid.Column<Autor>> columnas = Arrays.asList(
-                tablaAutores.getColumnByKey("id"),
-                tablaAutores.getColumnByKey("nombre"),
-                tablaAutores.getColumnByKey("apellido"),
-                tablaAutores.getColumnByKey("pseudonimo"),
-                tablaAutores.getColumnByKey("pais"));
-        Grid.Column<Autor> idColumn = tablaAutores.getColumnByKey("id");
+        List<Grid.Column<Categoria>> columnas = Arrays.asList(
+                tablaCategorias.getColumnByKey("id"),
+                tablaCategorias.getColumnByKey("nombre"),
+                tablaCategorias.getColumnByKey("disponible"),
+                tablaCategorias.getColumnByKey("descripcion"));
+        Grid.Column<Categoria> idColumn = tablaCategorias.getColumnByKey("id");
         idColumn.setVisible(false);
-        tablaAutores.setItems(autores);
-        tablaAutores.setColumnOrder(columnas);
-        tablaAutores.addComponentColumn(autor -> {
+        tablaCategorias.setItems(categorias);
+        tablaCategorias.setColumnOrder(columnas);
+        tablaCategorias.addComponentColumn(categoria -> {
             Icon editar = new Icon(VaadinIcon.EDIT);
 
             Icon detalles = new Icon(VaadinIcon.LIST_UL);
 
             Icon eliminar = new Icon(VaadinIcon.TRASH);
 
-            /*HorizontalLayout layoutBotones = new HorizontalLayout();
-            layoutBotones.add(detalles, editar, eliminar);
-
-            return layoutBotones;*/
             HorizontalLayout layoutBotones = new HorizontalLayout(detalles, editar, eliminar);
             layoutBotones.setSizeFull();
             layoutBotones.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
@@ -68,13 +63,13 @@ public class AutorView extends VerticalLayout {
 
             return cajabotones;
         }).setHeader("Acciones").setAutoWidth(true);
-        tablaAutores.getElement().getThemeList().add("dark");
-        tablaAutores.getElement().getStyle().setWidth("80%");
-        tablaAutores.getStyle().set("align-self", "center");
-        tablaAutores.getStyle().setMargin("3%");
-        add(busqueda(), tablaAutores);
+        tablaCategorias.getElement().getThemeList().add("dark");
+        tablaCategorias.getElement().getStyle().setWidth("80%");
+        tablaCategorias.getStyle().set("align-self", "center");
+        tablaCategorias.getStyle().setMargin("3%");
+        add(busqueda(), tablaCategorias);
         actulizarTabla();
-    
+
     }
 
     private HorizontalLayout busqueda() {
@@ -93,10 +88,11 @@ public class AutorView extends VerticalLayout {
     }
 
     private void actulizarTabla() {
-        tablaAutores.setItems(autorService.findAutores(campoBusqueda.getValue()));
+        tablaCategorias.setItems(categoriaService.findCategoria(campoBusqueda.getValue()));
     }
 
     private void limpiar() {
         campoBusqueda.clear();
     }
+
 }

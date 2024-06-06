@@ -1,8 +1,8 @@
 package com.ues.fia.bad115.views;
 
-import com.ues.fia.bad115.clase.Autor;
+import com.ues.fia.bad115.clase.Idioma;
 import com.ues.fia.bad115.component.NavBar;
-import com.ues.fia.bad115.service.AutorService;
+import com.ues.fia.bad115.service.IdiomaService;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.Icon;
@@ -15,37 +15,34 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-import java.util.List;
 import java.util.Arrays;
+import java.util.List;
 
-@Route("autores")
+@Route(value = "idiomas")
+@PageTitle(value = "Idiomas | Biblioteca Central de Centro America")
 
-@PageTitle(value = "Autores | Biblioteca Central de Centro America")
-public class AutorView extends VerticalLayout {
-    private AutorService autorService;
-    Grid<Autor> tablaAutores = new Grid<>(Autor.class);
+public class IdiomaView extends VerticalLayout {
+    private IdiomaService idiomaService;
+    Grid<Idioma> tablaIdioma = new Grid<>(Idioma.class);
     TextField campoBusqueda = new TextField();
     NavBar navegacion = new NavBar();
 
-    public AutorView(AutorService autorService) {
+    public IdiomaView(IdiomaService idiomaService) {
         setClassName("login");
-        this.autorService = autorService;
-        List<Autor> autores = autorService.getAutores();
-        H1 subtitulo = new H1("Autores");
+        this.idiomaService = idiomaService;
+        List<Idioma> idiomas = idiomaService.getIdiomas();
+        H1 subtitulo = new H1("Idiomas");
         subtitulo.getStyle().setColor("white");
         add(navegacion, subtitulo);
 
-        List<Grid.Column<Autor>> columnas = Arrays.asList(
-                tablaAutores.getColumnByKey("id"),
-                tablaAutores.getColumnByKey("nombre"),
-                tablaAutores.getColumnByKey("apellido"),
-                tablaAutores.getColumnByKey("pseudonimo"),
-                tablaAutores.getColumnByKey("pais"));
-        Grid.Column<Autor> idColumn = tablaAutores.getColumnByKey("id");
+        List<Grid.Column<Idioma>> columnas = Arrays.asList(
+                tablaIdioma.getColumnByKey("id"),
+                tablaIdioma.getColumnByKey("idioma"));
+        Grid.Column<Idioma> idColumn = tablaIdioma.getColumnByKey("id");
         idColumn.setVisible(false);
-        tablaAutores.setItems(autores);
-        tablaAutores.setColumnOrder(columnas);
-        tablaAutores.addComponentColumn(autor -> {
+        tablaIdioma.setItems(idiomas);
+        tablaIdioma.setColumnOrder(columnas);
+        tablaIdioma.addComponentColumn(idioma -> {
             Icon editar = new Icon(VaadinIcon.EDIT);
 
             Icon detalles = new Icon(VaadinIcon.LIST_UL);
@@ -56,6 +53,7 @@ public class AutorView extends VerticalLayout {
             layoutBotones.add(detalles, editar, eliminar);
 
             return layoutBotones;*/
+
             HorizontalLayout layoutBotones = new HorizontalLayout(detalles, editar, eliminar);
             layoutBotones.setSizeFull();
             layoutBotones.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
@@ -68,13 +66,13 @@ public class AutorView extends VerticalLayout {
 
             return cajabotones;
         }).setHeader("Acciones").setAutoWidth(true);
-        tablaAutores.getElement().getThemeList().add("dark");
-        tablaAutores.getElement().getStyle().setWidth("80%");
-        tablaAutores.getStyle().set("align-self", "center");
-        tablaAutores.getStyle().setMargin("3%");
-        add(busqueda(), tablaAutores);
+        tablaIdioma.getElement().getThemeList().add("dark");
+        tablaIdioma.getElement().getStyle().setWidth("80%");
+        tablaIdioma.getStyle().set("align-self", "center");
+        tablaIdioma.getStyle().setMargin("3%");
+        add(busqueda(), tablaIdioma);
         actulizarTabla();
-    
+
     }
 
     private HorizontalLayout busqueda() {
@@ -93,7 +91,7 @@ public class AutorView extends VerticalLayout {
     }
 
     private void actulizarTabla() {
-        tablaAutores.setItems(autorService.findAutores(campoBusqueda.getValue()));
+        tablaIdioma.setItems(idiomaService.findIdioma(campoBusqueda.getValue()));
     }
 
     private void limpiar() {

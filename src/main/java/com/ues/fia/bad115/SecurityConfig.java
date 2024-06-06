@@ -14,10 +14,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import com.ues.fia.bad115.service.CustomUserDetailsService;
 
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
+   /* @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
@@ -31,12 +31,13 @@ public class SecurityConfig {
                         .permitAll());
         return http.build();
     }
-
+*/
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /*
     @Bean
     public UserDetailsService userDetailsService() {
         return new CustomUserDetailsService();
@@ -45,5 +46,5 @@ public class SecurityConfig {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
-    }
+    }*/
 }
