@@ -31,6 +31,9 @@ public class RecursoService {
 
     // Métodos POST
     public Recurso saveRecurso(Recurso recurso) {
+        if (recurso.getId() == null || recurso.getId().isEmpty()) {
+            recurso.setId("0");
+        }
         return (Recurso) repository.save(recurso);
     }
 

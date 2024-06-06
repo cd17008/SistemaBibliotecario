@@ -4,11 +4,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.GenerationType;
 
-import java.util.List;
 
 @Entity
 @Table(name = "Idioma")
@@ -19,9 +17,6 @@ public class Idioma {
     private int id;
     @Column(name = "idioma")
     private String idioma;
-
-    @OneToMany(mappedBy = "idioma")
-    private List<Recurso> recursos;
 
     public int getId() {
         return id;
@@ -39,11 +34,4 @@ public class Idioma {
         this.idioma = idioma;
     }
 
-    public List<Recurso> getRecursos() {
-        return recursos;
-    }
-
-    public void setRecursos(List<Recurso> recursos) {
-        this.recursos = recursos;
-    }
 }

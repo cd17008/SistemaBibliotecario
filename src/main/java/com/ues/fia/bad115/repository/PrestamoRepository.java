@@ -19,6 +19,6 @@ public interface PrestamoRepository extends JpaRepository<Prestamo, Long> {
 
     Prestamo findByFecha(Date fecha);
 
-    Prestamo findByEstado(int estado);
+    Prestamo findByDevolucion(Date devolucion);
 
 }

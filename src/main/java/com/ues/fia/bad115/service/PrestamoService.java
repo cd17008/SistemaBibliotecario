@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class PrestamoService {
-    @Autowired 
+    @Autowired
     private PrestamoRepository repository;
 
     // Métodos GET
@@ -32,15 +32,15 @@ public class PrestamoService {
 
     // Métodos UPDATE
     public Prestamo updatePrestamo(Prestamo newPrestamo) {
-        Prestamo prestamo = (Prestamo) repository.findById((long)newPrestamo.getId()).orElse(null);
+        Prestamo prestamo = (Prestamo) repository.findById((long) newPrestamo.getId()).orElse(null);
         if (newPrestamo.getRecurso() != null) {
             prestamo.setRecurso(newPrestamo.getRecurso());
         }
         if (newPrestamo.getFecha() != null) {
             prestamo.setFecha(newPrestamo.getFecha());
         }
-        if (newPrestamo.getEstado() != prestamo.getEstado()) {
-            prestamo.setEstado(newPrestamo.getEstado());
+        if (newPrestamo.getDevolucion() != prestamo.getDevolucion()) {
+            prestamo.setDevolucion(newPrestamo.getDevolucion());
         }
         return (Prestamo) repository.save(prestamo);
     }

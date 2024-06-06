@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication(exclude = {
 		SecurityAutoConfiguration.class
-}, scanBasePackages = {"com.ues.fia.bad115"})
+}, scanBasePackages = { "com.ues.fia.bad115" })
 @EnableJpaRepositories("com.ues.fia.bad115.repository")
 @ComponentScan("com.ues.fia.bad115")
 @EntityScan("com.ues.fia.bad115.clase")
@@ -23,7 +23,6 @@ import org.springframework.context.annotation.ComponentScan;
 public class Bad115Application extends SpringBootServletInitializer implements AppShellConfigurator {
 
 	public static void main(String[] args) {
-		System.setProperty("server.port", "9090");
 		SpringApplication.run(Bad115Application.class, args);
 	}
 

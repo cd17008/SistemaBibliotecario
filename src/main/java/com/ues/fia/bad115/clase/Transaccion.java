@@ -6,6 +6,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 
 import java.util.Date;
 
@@ -14,6 +16,7 @@ import java.util.Date;
 public class Transaccion {
     @Id
     @Column(name = "idtransaccion")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "fechatrans")
     private Date fecha;

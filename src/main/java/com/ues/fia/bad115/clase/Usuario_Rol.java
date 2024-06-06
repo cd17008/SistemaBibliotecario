@@ -20,11 +20,11 @@ public class Usuario_Rol {
         this.idusuario = idusuario;
     }
 
-    public Rol getIdrol() {
+    public Rol getRol() {
         return rol;
     }
 
-    public void setIdrol(Rol rol) {
+    public void setRol(Rol rol) {
         this.rol = rol;
     }
 

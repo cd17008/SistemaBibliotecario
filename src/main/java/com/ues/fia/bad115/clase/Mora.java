@@ -2,18 +2,23 @@ package com.ues.fia.bad115.clase;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.GenerationType;
 
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "Mora")
 public class Mora {
     @Id
     @Column(name = "idmora")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "cantidad")
     private float cantidad;
@@ -23,6 +28,7 @@ public class Mora {
     @Column(name = "estadomora")
     private int estado;
     @Column(name = "fechamora")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "America/El_Salvador")
     private Date fechamora;
 
     public int getId() {
@@ -41,11 +47,11 @@ public class Mora {
         this.cantidad = cantidad;
     }
 
-    public Prestamo getIdprestamo() {
+    public Prestamo getPrestamo() {
         return prestamo;
     }
 
-    public void setIdprestamo(Prestamo prestamo) {
+    public void setPrestamo(Prestamo prestamo) {
         this.prestamo = prestamo;
     }
 

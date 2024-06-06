@@ -1,7 +1,6 @@
 package com.ues.fia.bad115.clase;
 
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "Recurso")
@@ -18,16 +17,16 @@ public class Recurso {
     @JoinColumn(name = "ididioma")
     private Idioma idioma;//
     @ManyToOne
-    @JoinColumn(name = "IdEditorial")
+    @JoinColumn(name = "Id_Editorial")
     private Editorial editorial;
     @ManyToOne
     @JoinColumn(name = "Subcategoria")
     private Subcategoria subcategoria;//
-    @Column(name = "CantidadDisponible")
+    @Column(name = "Cantidad_Disponible")
     private int cantidad;
     @Column(name = "Precio")
     private float precio;
-    @Column(name = "DescripcionRecurso")
+    @Column(name = "Descripcion_Recurso")
     private String descripcion;//
     @Lob
     @Column(name = "portada")
@@ -36,9 +35,6 @@ public class Recurso {
     private float calificacion;
     @Column(name = "Publicacion")
     private int publicacion;
-
-    @OneToMany(mappedBy = "recurso")
-    private List<Prestamo> prestamos;
 
     public Recurso() {
     }
@@ -137,14 +133,6 @@ public class Recurso {
 
     public void setPrecio(float precio) {
         this.precio = precio;
-    }
-
-    public List<Prestamo> getPrestamos() {
-        return prestamos;
-    }
-
-    public void setPrestamos(List<Prestamo> prestamos) {
-        this.prestamos = prestamos;
     }
 
 }

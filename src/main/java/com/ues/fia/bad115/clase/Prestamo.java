@@ -5,17 +5,20 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 
 import java.util.Date;
-import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "Prestamo")
 public class Prestamo {
     @Id
     @Column(name = "idprestamo")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
     @JoinColumn(name = "idusuario")
@@ -24,12 +27,11 @@ public class Prestamo {
     @JoinColumn(name = "idrecurso")
     private Recurso recurso;
     @Column(name = "fechaprestamo")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "America/El_Salvador")
     private Date fecha;
-    @Column(name = "estadoprestamo")
-    private int estado;
-
-    @OneToMany(mappedBy = "prestamo")
-    private List<Mora> moras;
+    @Column(name = "fechadevolucion")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "America/El_Salvador")
+    private Date devolucion;
 
     public int getId() {
         return id;
@@ -63,20 +65,12 @@ public class Prestamo {
         this.fecha = fecha;
     }
 
-    public int getEstado() {
-        return estado;
+    public Date getDevolucion() {
+        return devolucion;
     }
 
-    public void setEstado(int estado) {
-        this.estado = estado;
-    }
-
-    public List<Mora> getMoras() {
-        return moras;
-    }
-
-    public void setMoras(List<Mora> moras) {
-        this.moras = moras;
+    public void setDevolucion(Date devolucion) {
+        this.devolucion = devolucion;
     }
 
 }

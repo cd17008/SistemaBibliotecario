@@ -15,6 +15,10 @@ public class MoraController {
 
     @PostMapping("/addmora")
     public Mora addMora(@RequestBody Mora mora) {
+        System.out.println("Cantidad: " + mora.getCantidad());
+        System.out.println("Estado: " + mora.getEstado());
+        System.out.println("Fecha: " + mora.getFechamora());
+        System.out.println("ID Prestamo: " + mora.getPrestamo().getId());
         return service.saveMora(mora);
     }
 

@@ -61,8 +61,8 @@ public class MoraService {
         if (newMora.getCantidad() != mora.getCantidad()) {
             mora.setCantidad(newMora.getCantidad());
         }
-        if (newMora.getIdprestamo() != mora.getIdprestamo()) {
-            mora.setIdprestamo(newMora.getIdprestamo());
+        if (newMora.getPrestamo() != mora.getPrestamo()) {
+            mora.setPrestamo(newMora.getPrestamo());
         }
         if (newMora.getEstado() != mora.getEstado()) {
             mora.setEstado(newMora.getEstado());

@@ -17,7 +17,8 @@ import com.vaadin.flow.router.Route;
 import java.util.List;
 import java.util.Arrays;
 
-@Route(value = "autores")
+@Route("autores")
+
 @PageTitle(value = "Autores | Biblioteca Central de Centro America")
 public class AutorView extends VerticalLayout {
     private AutorService autorService;
@@ -61,6 +62,7 @@ public class AutorView extends VerticalLayout {
         tablaAutores.getStyle().setMargin("3%");
         add(busqueda(), tablaAutores);
         actulizarTabla();
+    
     }
 
     private HorizontalLayout busqueda() {

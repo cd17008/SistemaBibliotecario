@@ -6,8 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.OneToMany;
-import java.util.List;
 
 @Entity
 @Table(name = "Autor")
@@ -24,9 +22,6 @@ public class Autor {
     private String pais;
     @Column(name = "pseudonimo")
     private String pseudonimo;
-
-    @OneToMany(mappedBy = "autor")
-    private List<Recurso> recursos;
 
     public long getId() {
         return id;

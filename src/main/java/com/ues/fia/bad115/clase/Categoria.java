@@ -6,10 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
-import java.util.List;
 
 @Entity
 @Table(name = "Categoria")
@@ -25,10 +22,6 @@ public class Categoria {
     private int disponible;
     @Column(name = "descripcioncat")
     private String descripcion;
-
-    // Relaciones
-    @OneToMany(mappedBy = "categoria")
-    private List<Subcategoria> subcategorias;
 
     // Getters y Setters
     public int getId() {
@@ -63,11 +56,4 @@ public class Categoria {
         this.disponible = disponible;
     }
 
-    public List<Subcategoria> getSubcategorias() {
-        return subcategorias;
-    }
-
-    public void setSubcategorias(List<Subcategoria> subcategorias) {
-        this.subcategorias = subcategorias;
-    }
 }

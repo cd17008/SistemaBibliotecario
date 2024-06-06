@@ -7,10 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-import java.util.List;
 
 @Entity
 @Table(name = "Subcategoria")
@@ -26,9 +24,6 @@ public class Subcategoria {
     @ManyToOne
     @JoinColumn(name = "categoria", nullable = false)
     private Categoria categoria;
-
-    @OneToMany(mappedBy = "subcategoria")
-    private List<Recurso> recursos;
 
     public int getId() {
         return id;
@@ -60,14 +55,6 @@ public class Subcategoria {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
-    }
-
-    public List<Recurso> getRecursos() {
-        return recursos;
-    }
-
-    public void setRecursos(List<Recurso> recursos) {
-        this.recursos = recursos;
     }
 
 }

@@ -4,11 +4,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.JoinColumn;
 
-import java.util.List;
 
 @Entity
 @Table(name = "Usuario")
@@ -33,12 +31,6 @@ public class Usuario {
     private String tipousuario;
     @Column(name = "telefono")
     private String telefono;
-
-    @OneToMany(mappedBy = "usuario")
-    private List<Prestamo> prestamos;
-
-    @OneToMany(mappedBy = "usuario")
-    private List<Transaccion> transacciones;
 
     public int getId() {
         return id;
@@ -110,22 +102,6 @@ public class Usuario {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
-
-    public List<Prestamo> getPrestamos() {
-        return prestamos;
-    }
-
-    public void setPrestamos(List<Prestamo> prestamos) {
-        this.prestamos = prestamos;
-    }
-
-    public List<Transaccion> getTransacciones() {
-        return transacciones;
-    }
-
-    public void setTransacciones(List<Transaccion> transacciones) {
-        this.transacciones = transacciones;
     }
 
 }

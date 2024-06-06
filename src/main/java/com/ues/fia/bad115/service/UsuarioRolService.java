@@ -39,8 +39,8 @@ public class UsuarioRolService {
     // Métodos UPDATE
     public Usuario_Rol updateUsuarioRol(Usuario_Rol newUsuarioRol) {
         Usuario_Rol usuarioRol = (Usuario_Rol) repository.findById((long) newUsuarioRol.getIdusuario()).orElse(null);
-        if (newUsuarioRol.getIdrol() != usuarioRol.getIdrol()) {
-            usuarioRol.setIdrol(newUsuarioRol.getIdrol());
+        if (newUsuarioRol.getRol() != usuarioRol.getRol()) {
+            usuarioRol.setRol(newUsuarioRol.getRol());
         }
         return (Usuario_Rol) repository.save(usuarioRol);
     }
