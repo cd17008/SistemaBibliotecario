@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -19,6 +20,7 @@ import org.springframework.context.annotation.ComponentScan;
 @EntityScan("com.ues.fia.bad115.clase")
 @EnableTransactionManagement
 @EnableVaadin
+@EnableScheduling
 
 public class Bad115Application extends SpringBootServletInitializer implements AppShellConfigurator {
 

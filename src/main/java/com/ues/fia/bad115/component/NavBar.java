@@ -2,10 +2,10 @@ package com.ues.fia.bad115.component;
 
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Anchor;
-import com.vaadin.flow.component.html.H1;
+//import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+//import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 @CssImport("styles.css")
 

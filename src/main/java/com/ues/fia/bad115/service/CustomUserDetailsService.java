@@ -32,7 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("Usuario no encontrado");
         }
 
-        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + user.getRol().getRol());
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + user.getRol().getRol().toUpperCase());
         Set<GrantedAuthority> authorities = Collections.singleton(authority);
 
         return new org.springframework.security.core.userdetails.User(

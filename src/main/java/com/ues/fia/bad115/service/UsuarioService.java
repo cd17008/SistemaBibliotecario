@@ -106,7 +106,7 @@ public class UsuarioService {
 
     // Validacion
     public boolean validarUsuario(Usuario usuario) {
-        Usuario usuario1 = (Usuario) repository.findByEmail(usuario.getEmail());
+        Usuario usuario1 = repository.findByEmail(usuario.getEmail());
         if (usuario1 != null) {
             if (passwordEncoder.matches(usuario.getPassword(), usuario1.getPassword())) {
                 return true;

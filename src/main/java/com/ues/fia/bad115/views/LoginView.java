@@ -8,13 +8,21 @@ import com.vaadin.flow.component.login.LoginI18n;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouteAlias;
+//import java.util.Collections;
+import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+//import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import com.ues.fia.bad115.clase.Usuario;
+import com.ues.fia.bad115.service.UsuarioService;
+//import org.springframework.security.core.context.SecurityContextHolder;
 
 @Route(value = "login")
-@RouteAlias(value = "")
 @CssImport(value = "styles.css")
 @PageTitle(value = "Iniciar Sesión | Biblioteca Central de Centro América")
 public class LoginView extends VerticalLayout {
+    @Autowired
+    private UsuarioService usuarioService;
+
     public LoginView() {
         setClassName("login");
         LoginI18n i18n = LoginI18n.createDefault();
@@ -33,11 +41,20 @@ public class LoginView extends VerticalLayout {
         LoginForm login = new LoginForm();
         login.setClassName("login-box");
         login.setI18n(i18n);
+
         login.getElement().getThemeList().add("dark");
         H1 titulo = new H1("BIBLIOTECA CENTRAL DE CENTRO AMÉRICA");
         titulo.setClassName("titulo");
+
         login.addLoginListener(e -> {
-            UI.getCurrent().navigate("autores");
+            Usuario usuario = new Usuario();
+            usuario.setEmail(e.getUsername());
+            usuario.setPassword(e.getPassword());
+            if (usuarioService.validarUsuario(usuario)) {
+                UI.getCurrent().navigate("principal");
+            } else {
+                login.setError(true);
+            }
         });
         add(titulo, login);
     }
