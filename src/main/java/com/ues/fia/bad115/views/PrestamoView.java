@@ -72,8 +72,6 @@ public class PrestamoView extends VerticalLayout {
         });
 
 
-
-
         Button button = new Button("Guardar");
         button.addClickListener(clickEvent -> {
             // Validar recurso
@@ -87,6 +85,20 @@ public class PrestamoView extends VerticalLayout {
             if (usuarioService.getUsuarioByCarnet(carnet.getValue()) == null){
                 // Usuario no existe, mostrar mensaje de error
                 Notification.show("El usuario ingresado no existe", 3000, Position.TOP_CENTER);
+                return;
+            }
+            else{
+                Usuario user = usuarioService.getUsuarioByCarnet(carnet.getValue());
+                if (user.activo == 0){ 
+                    // Usuario no existe, mostrar mensaje de error
+                    Notification.show("El usuario ingresado no esta activo", 3000, Position.TOP_CENTER);
+                    return;
+                }
+            }
+
+            // Validar fechas de prestamo y devolucion en caso de que no se hayan ingresado
+            if (fechaPrestamo.getValue() == null || fechaDevolucion.getValue() == null){
+                Notification.show("Debe ingresar la fecha de prestamo y devolucion", 3000, Position.TOP_CENTER);
                 return;
             }
 

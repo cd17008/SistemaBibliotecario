@@ -23,7 +23,7 @@ public class Usuario {
     @Column(name = "passwordusuario")
     private String password;
     @Column(name = "activo")
-    private int activo;
+    public int activo;
     @OneToOne
     @JoinColumn(name = "carnet")
     private Carnet carnet;
