@@ -52,10 +52,12 @@ public class AutorView extends VerticalLayout {
 
             Icon eliminar = new Icon(VaadinIcon.TRASH);
 
-            /*HorizontalLayout layoutBotones = new HorizontalLayout();
-            layoutBotones.add(detalles, editar, eliminar);
-
-            return layoutBotones;*/
+            /*
+             * HorizontalLayout layoutBotones = new HorizontalLayout();
+             * layoutBotones.add(detalles, editar, eliminar);
+             * 
+             * return layoutBotones;
+             */
             HorizontalLayout layoutBotones = new HorizontalLayout(detalles, editar, eliminar);
             layoutBotones.setSizeFull();
             layoutBotones.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
@@ -74,21 +76,16 @@ public class AutorView extends VerticalLayout {
         tablaAutores.getStyle().setMargin("3%");
         add(busqueda(), tablaAutores);
         actulizarTabla();
-    
+
     }
 
     private HorizontalLayout busqueda() {
         campoBusqueda.setPlaceholder("Escribe un nombre");
         campoBusqueda.setValueChangeMode(ValueChangeMode.LAZY);
         campoBusqueda.addValueChangeListener(event -> actulizarTabla());
-        campoBusqueda.getStyle().setBorder("1px solid #ccc");
-        campoBusqueda.getStyle().set("border-radius", "5px");
-        campoBusqueda.getStyle().setBackgroundColor("white");
-        Icon vaciar = new Icon(VaadinIcon.CLOSE_CIRCLE_O);
-
-        vaciar.addClickListener(e -> limpiar());
-
-        var buscar = new HorizontalLayout(campoBusqueda, vaciar);
+        campoBusqueda.getElement().getThemeList().add("dark");
+        campoBusqueda.setClearButtonVisible(true);
+        var buscar = new HorizontalLayout(campoBusqueda);
         return buscar;
     }
 
@@ -96,7 +93,4 @@ public class AutorView extends VerticalLayout {
         tablaAutores.setItems(autorService.findAutores(campoBusqueda.getValue()));
     }
 
-    private void limpiar() {
-        campoBusqueda.clear();
-    }
 }

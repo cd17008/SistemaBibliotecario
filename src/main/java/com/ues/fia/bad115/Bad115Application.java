@@ -27,5 +27,4 @@ public class Bad115Application extends SpringBootServletInitializer implements A
 	public static void main(String[] args) {
 		SpringApplication.run(Bad115Application.class, args);
 	}
-
 }

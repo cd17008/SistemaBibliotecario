@@ -8,6 +8,8 @@ import com.vaadin.flow.component.login.LoginI18n;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
+
 //import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -51,6 +53,7 @@ public class LoginView extends VerticalLayout {
             usuario.setEmail(e.getUsername());
             usuario.setPassword(e.getPassword());
             if (usuarioService.validarUsuario(usuario)) {
+                VaadinSession.getCurrent().getSession().setAttribute("username", e.getUsername());
                 UI.getCurrent().navigate("principal");
             } else {
                 login.setError(true);
