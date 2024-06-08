@@ -39,6 +39,7 @@ public class NavBar extends VerticalLayout {
         usuario = new NativeLabel();
         UI ui = UI.getCurrent();
         System.out.println("UI: " + ui);
+        titulo.getStyle().set("margin-top", "10px");
         add(titulo, atajos);
         // startClock(ui);
         setAlignItems(Alignment.CENTER);
