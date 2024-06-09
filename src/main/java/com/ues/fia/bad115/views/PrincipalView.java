@@ -12,7 +12,6 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
 
-
 import com.ues.fia.bad115.service.UsuarioService;
 
 @Route(value = "principal")
@@ -47,7 +46,7 @@ public class PrincipalView extends VerticalLayout {
         Button recursosButton = new Button("RECURSOS", new Icon(VaadinIcon.BOOK));
         Button prestamosButton = new Button("PRESTAMOS", new Icon(VaadinIcon.ARROW_RIGHT));
         Button reporButton = new Button("REPORTES", new Icon(VaadinIcon.CHART));
-        //Button morasButton = new Button("MORAS");
+        // Button morasButton = new Button("MORAS");
 
         // Estilo para los botones
         usuariosButton.getStyle().set("font-size", "2em");
@@ -65,22 +64,27 @@ public class PrincipalView extends VerticalLayout {
         });
         prestamosButton.addClassName("main-button");
         prestamosButton.addClickListener(e -> {
-            prestamosButton.getUI().ifPresent(ui -> ui.navigate("prestamos"));
+            prestamosButton.getUI().ifPresent(ui -> ui.navigate("Prestamos"));
         });
-        /*morasButton.addClassName("main-button");
-        morasButton.addClickListener(e -> {
-            morasButton.getUI().ifPresent(ui -> ui.navigate("moras"));
-        });*/
+        /*
+         * morasButton.addClassName("main-button");
+         * morasButton.addClickListener(e -> {
+         * morasButton.getUI().ifPresent(ui -> ui.navigate("moras"));
+         * });
+         */
         reporButton.addClassName("main-button");
         reporButton.addClickListener(e -> {
             reporButton.getUI().ifPresent(ui -> ui.navigate("reportes"));
         });
 
         // Layout de botones
-        /*HorizontalLayout buttonsLayout = new HorizontalLayout(usuariosButton, recursosButton, prestamosButton,
-                morasButton, reporButton);
-        buttonsLayout.setJustifyContentMode(JustifyContentMode.CENTER);
-        buttonsLayout.addClassName("main-buttons");*/
+        /*
+         * HorizontalLayout buttonsLayout = new HorizontalLayout(usuariosButton,
+         * recursosButton, prestamosButton,
+         * morasButton, reporButton);
+         * buttonsLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+         * buttonsLayout.addClassName("main-buttons");
+         */
         HorizontalLayout firstRow = new HorizontalLayout(usuariosButton, recursosButton);
         HorizontalLayout secondRow = new HorizontalLayout(prestamosButton, reporButton);
 
