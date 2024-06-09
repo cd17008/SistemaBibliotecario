@@ -1,4 +1,5 @@
 package com.ues.fia.bad115.views;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Arrays;
@@ -23,22 +24,20 @@ import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-
-
 @Route("Prestamos")
 @PageTitle(value = "Prestamos | Biblioteca Central de Centro America")
-public class PrestamosView extends VerticalLayout{
+public class PrestamosView extends VerticalLayout {
     private PrestamoService prestamoService;
     NavBar navegacion = new NavBar();
     Grid<Prestamo> tablaPrestamos = new Grid<>(Prestamo.class);
-    TextField comboPrestamos = new TextField ("Filtrar");
-    //Filtrar por fecha de prestamo
+    TextField comboPrestamos = new TextField("Filtrar");
+    // Filtrar por fecha de prestamo
     DatePicker fechaPrestamo = new DatePicker("Fecha de prestamo");
-    //Filtrar por fecha de devolucion
+    // Filtrar por fecha de devolucion
     DatePicker fechaDevolucion = new DatePicker("Fecha de devolucion");
 
     @Autowired
-    public PrestamosView (PrestamoService prestamoService) {
+    public PrestamosView(PrestamoService prestamoService) {
 
         comboPrestamos.setPlaceholder("Usuario o Recurso");
         comboPrestamos.getElement().getStyle().setColor("white");
@@ -51,7 +50,6 @@ public class PrestamosView extends VerticalLayout{
         fechaDevolucion.getElement().getStyle().set("align-self", "center");
         fechaDevolucion.setClearButtonVisible(true);
         fechaDevolucion.getElement().getThemeList().add("dark");
-
 
         this.prestamoService = prestamoService;
         List<Prestamo> prestamos = prestamoService.getPrestamos();
@@ -71,14 +69,14 @@ public class PrestamosView extends VerticalLayout{
                 tablaPrestamos.getColumnByKey("id"),
                 tablaPrestamos.getColumnByKey("usuario"),
                 tablaPrestamos.addColumn(prestamo -> prestamo.getUsuario().getNombre())
-                .setHeader("Usuario"),
+                        .setHeader("Usuario"),
                 tablaPrestamos.getColumnByKey("recurso"),
                 tablaPrestamos.addColumn(prestamo -> prestamo.getRecurso().getTitulo())
-                .setHeader("Recurso"),
+                        .setHeader("Recurso"),
                 tablaPrestamos.getColumnByKey("fecha"),
                 tablaPrestamos.getColumnByKey("devolucion"));
-                        
-                //Modificar la columna fecha para que muestre el formato de fecha correcto
+
+        // Modificar la columna fecha para que muestre el formato de fecha correcto
 
         Grid.Column<Prestamo> idColumn = tablaPrestamos.getColumnByKey("id");
         Grid.Column<Prestamo> prestamoColumn = tablaPrestamos.getColumnByKey("usuario");
@@ -103,13 +101,15 @@ public class PrestamosView extends VerticalLayout{
             detalles.addClickListener(e -> {
                 detallesPrestamo(prestamo);
             });
-            Icon eliminar = new Icon(VaadinIcon.TRASH);
+            Icon eliminar = new Icon(VaadinIcon.CHECK);
             eliminar.getStyle().set("cursor", "pointer");
             eliminar.addClickListener(e -> {
                 confirmarEliminar(prestamo);
                 actulizarTabla();
             });
-
+            if (prestamo.getDevolucion() != null) {
+                eliminar.setVisible(false);
+            }
             HorizontalLayout layoutBotones = new HorizontalLayout(detalles, eliminar);
             layoutBotones.setSizeFull();
             layoutBotones.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
@@ -132,11 +132,11 @@ public class PrestamosView extends VerticalLayout{
         });
 
         // fechaPrestamo.addValueChangeListener(e -> {
-        //     if (e.getValue() != null) {
-        //         tablaPrestamos.setItems(prestamoService.findPrestamosFecha(e.getValue()));
-        //     } else {
-        //         actulizarTabla();
-        //     }
+        // if (e.getValue() != null) {
+        // tablaPrestamos.setItems(prestamoService.findPrestamosFecha(e.getValue()));
+        // } else {
+        // actulizarTabla();
+        // }
         // });
 
         add(navegacion, titulo, comboPrestamos, tablaPrestamos);
@@ -157,14 +157,14 @@ public class PrestamosView extends VerticalLayout{
         detallesLayout.add(new HorizontalLayout(new Icon(VaadinIcon.USER),
                 new Span("Usuario: " + prestamo.getUsuario().getNombre() + " "
                         + prestamo.getUsuario().getApellido())));
-        //Agregar email de usuario y telefono
+        // Agregar email de usuario y telefono
         detallesLayout.add(new HorizontalLayout(new Icon(VaadinIcon.ENVELOPE),
                 new Span("Email: " + prestamo.getUsuario().getEmail())));
         detallesLayout.add(new HorizontalLayout(new Icon(VaadinIcon.PHONE),
                 new Span("Telefono: " + prestamo.getUsuario().getTelefono())));
         detallesLayout.add(new HorizontalLayout(new Icon(VaadinIcon.DOLLAR),
                 new Span("Titutlo: " + prestamo.getRecurso().getTitulo())));
-        //Agregar decripcion de recurso, autor y categoria
+        // Agregar decripcion de recurso, autor y categoria
         detallesLayout.add(new HorizontalLayout(new Icon(VaadinIcon.BOOK),
                 new Span("Descripcion: " + prestamo.getRecurso().getDescripcion())));
         detallesLayout.add(new HorizontalLayout(new Icon(VaadinIcon.USER),
@@ -185,18 +185,19 @@ public class PrestamosView extends VerticalLayout{
         dialogo.open();
     }
 
-    //Dialogo de confirmacion para eliminar un prestamo
+    // Dialogo de confirmacion para eliminar un prestamo
     private void confirmarEliminar(Prestamo prestamo) {
         Dialog dialogo = new Dialog();
         dialogo.setCloseOnOutsideClick(true);
         dialogo.setCloseOnEsc(true);
         dialogo.getElement().getThemeList().add("light");
         VerticalLayout detallesLayout = new VerticalLayout();
-        detallesLayout.add(new Span("¿Estas seguro de eliminar el prestamo?"));
+        detallesLayout.add(new Span("¿Registrar devolucion del préstamo?"));
         Button confirmar = new Button("Confirmar", new Icon(VaadinIcon.CHECK));
         confirmar.getStyle().set("cursor", "pointer");
         confirmar.addClickListener(e -> {
-            prestamoService.deletePrestamo(prestamo.getId());
+            prestamo.setDevolucion(java.sql.Date.valueOf(LocalDate.now()));
+            prestamoService.updatePrestamo(prestamo);
             actulizarTabla();
             dialogo.close();
         });
