@@ -45,9 +45,13 @@ public class NavBar extends VerticalLayout {
 
     private HorizontalLayout atajos() {
         String username = (String) VaadinSession.getCurrent().getSession().getAttribute("username");
-        int indice = username.indexOf("@");
-        if (indice != -1) {
-            username = username.substring(0, indice);
+        try {
+            int indice = username.indexOf("@");
+            if (indice != -1) {
+                username = username.substring(0, indice);
+            }
+        } catch (Exception e) {
+            username = null;
         }
         usuario = new NativeLabel();
         usuario.setText("Usuario: " + username);
