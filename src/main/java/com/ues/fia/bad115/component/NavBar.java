@@ -12,6 +12,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import java.time.LocalDate;
 
 @CssImport("styles.css")
 public class NavBar extends VerticalLayout {
@@ -81,10 +82,13 @@ public class NavBar extends VerticalLayout {
         login.getStyle().set("padding", "5px");
         HorizontalLayout toolbar = new HorizontalLayout(home, recursos, usuarios, prestamos, reportes);
         HorizontalLayout sesion;
+        NativeLabel date = new NativeLabel();
+        date = new NativeLabel();
+        date.setText("Fecha del sistema: " + LocalDate.now().toString());
         if (username == null) {
-            sesion = new HorizontalLayout(login);
+            sesion = new HorizontalLayout(date, login);
         } else {
-            sesion = new HorizontalLayout(usuario, logOut);
+            sesion = new HorizontalLayout(date, usuario, logOut);
         }
         toolbar.setSpacing(true);
         toolbar.getStyle().set("margin-right", "10px");
