@@ -336,8 +336,4 @@ public class UsuarioView extends VerticalLayout {
         tablaPrestamos.setItems(prestamos);
     }
 
-    private void actulizarTablaMoras(List<Mora> moras) {
-        tablaPrestamos.setItems(moras);
-    }
-
 }
