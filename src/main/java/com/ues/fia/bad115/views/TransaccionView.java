@@ -6,6 +6,7 @@ import com.ues.fia.bad115.service.TransaccionService;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -132,6 +133,7 @@ public class TransaccionView extends VerticalLayout {
         LocalTime hora = transaccion.getFecha().toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
         System.out.println(transaccion.getFecha());
         VerticalLayout detallesLayout = new VerticalLayout();
+        detallesLayout.add(new H3("Detalles de la transacción"));
         detallesLayout.add(new HorizontalLayout(new Icon(VaadinIcon.USER),
                 new Span("Usuario: " + transaccion.getIdusuario().getNombre() + " "
                         + transaccion.getIdusuario().getApellido())));
