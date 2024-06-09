@@ -59,7 +59,7 @@ public class NavBar extends VerticalLayout {
         Anchor home = new Anchor("principal", "Inicio");
         Anchor recursos = new Anchor("recursos", "Recursos");
         Anchor usuarios = new Anchor("usuarios", "Usuarios");
-        Anchor prestamos = new Anchor("Prestamo", "Prestamos");
+        Anchor prestamos = new Anchor("Prestamos", "Prestamos");
         Anchor reportes = new Anchor("reportes", "Reportes");
 
         logOut.addClickListener(e -> {

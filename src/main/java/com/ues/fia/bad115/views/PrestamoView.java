@@ -8,6 +8,7 @@ import com.ues.fia.bad115.service.RecursoService;
 import com.ues.fia.bad115.service.UsuarioService;
 import com.ues.fia.bad115.service.PrestamoService;
 import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.notification.Notification;
@@ -44,7 +45,7 @@ public class PrestamoView extends VerticalLayout implements HasUrlParameter<Stri
         this.recursoService = recursoService;
         this.usuarioService = usuarioService;
         this.prestamoService = prestamoService;
-        
+
         H2 titulo = new H2("Realizar Prestamo");
         titulo.setClassName("titulo");
         setClassName("login");
@@ -53,8 +54,12 @@ public class PrestamoView extends VerticalLayout implements HasUrlParameter<Stri
 
     @Override
     public void setParameter(BeforeEvent event, @OptionalParameter String parameter) {
-        this.parameter = parameter;
-        add(getFormLayout(parameter));
+        try {
+            this.parameter = parameter;
+            add(getFormLayout(parameter));
+        } catch (Exception e) {
+            UI.getCurrent().navigate("recursos");
+        }
     }
 
     public FormLayout getFormLayout(String parameter) {
@@ -147,8 +152,7 @@ public class PrestamoView extends VerticalLayout implements HasUrlParameter<Stri
         formLayout.setColspan(codigoR, 2);
         formLayout.setResponsiveSteps(
                 new FormLayout.ResponsiveStep("0", 1),
-                new FormLayout.ResponsiveStep("500px", 3)
-        );
+                new FormLayout.ResponsiveStep("500px", 3));
         formLayout.getStyle().set("padding-left", "15em");
         formLayout.getStyle().set("padding-right", "15em");
         formLayout.getElement().getThemeList().add("dark");
