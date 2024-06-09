@@ -20,7 +20,7 @@ public interface MoraRepository extends JpaRepository<Mora, Long> {
 
     Mora findByPrestamo(Prestamo prestamo);
 
-    Mora findByEstado(int estado);
+    List<Mora> findByEstado(int estado);
 
     Mora findByFechamora(Date fechamora);
 

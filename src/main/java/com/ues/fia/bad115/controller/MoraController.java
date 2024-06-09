@@ -45,7 +45,7 @@ public class MoraController {
     }
 
     @GetMapping("/mora/estado/{estado}")
-    public Mora findMorasByEstado(@PathVariable int estado) {
+    public List<Mora> findMorasByEstado(@PathVariable int estado) {
         return service.findMorasByEstado(estado);
     }
 

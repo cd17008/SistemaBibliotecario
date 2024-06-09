@@ -30,7 +30,7 @@ public class MoraService {
         return repository.findByPrestamo(prestamo);
     }
 
-    public Mora findMorasByEstado(int estado) {
+    public List<Mora> findMorasByEstado(int estado) {
         return repository.findByEstado(estado);
     }
 

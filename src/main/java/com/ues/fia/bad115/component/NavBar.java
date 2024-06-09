@@ -45,12 +45,17 @@ public class NavBar extends VerticalLayout {
 
     private HorizontalLayout atajos() {
         String username = (String) VaadinSession.getCurrent().getSession().getAttribute("username");
+        int indice = username.indexOf("@");
+        if (indice != -1) {
+            username = username.substring(0, indice);
+        }
         usuario = new NativeLabel();
-        usuario.setText(username);
+        usuario.setText("Usuario: " + username);
         Anchor home = new Anchor("principal", "Inicio");
         Anchor recursos = new Anchor("recursos", "Recursos");
         Anchor usuarios = new Anchor("usuarios", "Usuarios");
-        Anchor autores = new Anchor("autores", "Autores ");
+        Anchor prestamos = new Anchor("Prestamo", "Prestamos");
+        Anchor reportes = new Anchor("reportes", "Reportes");
 
         logOut.addClickListener(e -> {
             VaadinSession.getCurrent().getSession().setAttribute("username", null);
@@ -62,14 +67,15 @@ public class NavBar extends VerticalLayout {
         home.getStyle().set("color", "white");
         recursos.getStyle().set("color", "white");
         usuarios.getStyle().set("color", "white");
-        autores.getStyle().set("color", "white");
+        prestamos.getStyle().set("color", "white");
+        reportes.getStyle().set("color", "white");
         Anchor login = new Anchor("login", "Iniciar Sesión");
         login.getStyle().set("color", "#1c2738");
         login.getStyle().set("border", "1px solid white");
         login.getStyle().set("border-radius", "5px");
         login.getStyle().set("background-color", "white");
         login.getStyle().set("padding", "5px");
-        HorizontalLayout toolbar = new HorizontalLayout(home, recursos, usuarios, autores);
+        HorizontalLayout toolbar = new HorizontalLayout(home, recursos, usuarios, prestamos, reportes);
         HorizontalLayout sesion;
         if (username == null) {
             sesion = new HorizontalLayout(login);

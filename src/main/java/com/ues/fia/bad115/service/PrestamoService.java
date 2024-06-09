@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ues.fia.bad115.clase.Prestamo;
 import com.ues.fia.bad115.repository.PrestamoRepository;
+import com.ues.fia.bad115.clase.Usuario;
 
 import java.util.List;
 
@@ -12,6 +13,9 @@ public class PrestamoService {
     @Autowired
     private PrestamoRepository repository;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
     // Métodos GET
     public List<Prestamo> getPrestamos() {
         return repository.findAll();
@@ -19,6 +23,11 @@ public class PrestamoService {
 
     public Prestamo getPrestamo(int id) {
         return (Prestamo) repository.findById((long) id).orElse(null);
+    }
+
+    public List<Prestamo> getPrestamosByUsuario(int id) {
+        Usuario usuario = usuarioService.getUsuario(id);
+        return repository.findByUsuario(usuario);
     }
 
     // Métodos POST

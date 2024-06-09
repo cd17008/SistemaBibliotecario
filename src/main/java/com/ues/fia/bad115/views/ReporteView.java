@@ -15,6 +15,7 @@ import com.vaadin.flow.component.charts.model.DataSeries;
 import com.vaadin.flow.component.charts.model.DataSeriesItem;
 import com.vaadin.flow.component.charts.model.style.SolidColor;
 import com.vaadin.flow.component.charts.model.style.Style;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H3;
 
@@ -31,9 +32,30 @@ public class ReporteView extends VerticalLayout {
 
     public ReporteView(TransaccionService transaccionsService) {
         setClassName("login");
-        H1 titulo = new H1("Reportes Financieros");
+        H1 titulo = new H1("Reportes");
         titulo.setClassName("titulo");
+        ComboBox<String> comboBoxCategoria = new ComboBox<>();
+        comboBoxCategoria.setItems("Finanzas", "Recursos", "Prestamos");
+        comboBoxCategoria.setPlaceholder("Seleccione una categoria");
 
+        ComboBox<String> comboBoxReporte = new ComboBox<>();
+        List<String> reportesFinanzas = List.of("Porcentaje de transacciones", "Monto de transacciones");
+        List<String> reportesRecursos = List.of("Recursos por Categoria", "Recursos por subcategoria");
+        List<String> reportesPrestamos = List.of("Porcentaje Recursos Prestados", "Recursos Prestados por Usuario");
+        comboBoxReporte.setPlaceholder("Seleccione un reporte");
+        comboBoxReporte.setReadOnly(true);
+        comboBoxCategoria.addValueChangeListener(event -> {
+            if (event.getValue().equals("Finanzas")) {
+                comboBoxReporte.setReadOnly(false);
+                comboBoxReporte.setItems(reportesFinanzas);
+            } else if (event.getValue().equals("Recursos")) {
+                comboBoxReporte.setReadOnly(false);
+                comboBoxReporte.setItems(reportesRecursos);
+            } else if (event.getValue().equals("Prestamos")) {
+                comboBoxReporte.setReadOnly(false);
+                comboBoxReporte.setItems(reportesPrestamos);
+            }
+        });
         this.transaccionService = transaccionsService;
         // Obtener las transacciones de tipo entrada y salida
         List<Transaccion> entradas = transaccionService.getTransaccionTipo("Entrada");
@@ -106,7 +128,19 @@ public class ReporteView extends VerticalLayout {
         layout.getStyle().set("margin", "0");
         layout.getStyle().set("padding", "0");
 
-        add(navegacion, titulo, layout);
+        comboBoxCategoria.getElement().getThemeList().add("dark");
+        comboBoxReporte.getElement().getThemeList().add("dark");
+        HorizontalLayout comboLayout = new HorizontalLayout(comboBoxCategoria, comboBoxReporte);
+        comboLayout.getStyle().set("justify-content", "center");
+        comboLayout.getStyle().set("align-items", "center");
+        comboLayout.getStyle().set("margin", "0");
+        comboLayout.getStyle().set("padding", "0");
+
+        add(navegacion, titulo, comboLayout, layout);
+    }
+
+    private VerticalLayout reporteFinanzas() {
+        return new VerticalLayout();
     }
 
 }

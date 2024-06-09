@@ -27,6 +27,11 @@ public class PrestamoController {
         return service.getPrestamo(id);
     }
 
+    @GetMapping("/prestamobyusuario/{id}")
+    public List<Prestamo> findPrestamoByUsuario(@PathVariable int id) {
+        return service.getPrestamosByUsuario(id);
+    }
+
     @DeleteMapping("/delprestamo/{id}")
     public String deletePrestamo(@PathVariable int id) {
         return service.deletePrestamo(id);
