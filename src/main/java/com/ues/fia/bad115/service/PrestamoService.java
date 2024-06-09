@@ -21,6 +21,14 @@ public class PrestamoService {
         return repository.findAll();
     }
 
+    public List<Prestamo> findPrestamos(String filtro) {
+        if (filtro == null || filtro.isEmpty()) {
+            return repository.findAll();
+        } else {
+            return repository.searchByName(filtro);
+        }
+    }
+
     public Prestamo getPrestamo(int id) {
         return (Prestamo) repository.findById((long) id).orElse(null);
     }
