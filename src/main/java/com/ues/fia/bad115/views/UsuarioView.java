@@ -250,7 +250,6 @@ public class UsuarioView extends VerticalLayout {
                     moraService.saveMora(mora);
                     Notification.show("Mora pagada", 3000, Notification.Position.BOTTOM_START);
                 }
-                actulizarTablaMoras(moras);
             });
             if (mora.getEstado() == 0) {
                 pagar.setVisible(false);
