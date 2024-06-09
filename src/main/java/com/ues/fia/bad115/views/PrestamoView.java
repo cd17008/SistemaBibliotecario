@@ -8,6 +8,7 @@ import com.ues.fia.bad115.service.RecursoService;
 import com.ues.fia.bad115.service.UsuarioService;
 import com.ues.fia.bad115.service.PrestamoService;
 import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.notification.Notification;
@@ -15,6 +16,9 @@ import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.BeforeEvent;
+import com.vaadin.flow.router.HasUrlParameter;
+import com.vaadin.flow.router.OptionalParameter;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -28,11 +32,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Route(value = "Prestamo")
 @CssImport(value = "styles.css")
 @PageTitle(value = "Prestamo | Biblioteca Central de Centro America")
-public class PrestamoView extends VerticalLayout {
+public class PrestamoView extends VerticalLayout implements HasUrlParameter<String> {
     NavBar navegacion = new NavBar();
     private RecursoService recursoService;
     private UsuarioService usuarioService;
     private PrestamoService prestamoService;
+
+    private String parameter;
 
     @Autowired
     public PrestamoView(RecursoService recursoService, UsuarioService usuarioService, PrestamoService prestamoService) {
@@ -43,17 +49,28 @@ public class PrestamoView extends VerticalLayout {
         H2 titulo = new H2("Realizar Prestamo");
         titulo.setClassName("titulo");
         setClassName("login");
-        add(navegacion, titulo, getFormLayout());
+        add(navegacion, titulo);
     }
 
-    public FormLayout getFormLayout() {
+    @Override
+    public void setParameter(BeforeEvent event, @OptionalParameter String parameter) {
+        this.parameter = parameter;
+        add(getFormLayout(parameter));
+    }
+
+    public FormLayout getFormLayout(String parameter) {
         TextField carnet = new TextField("Carnet de usuario");
         TextField codigoR = new TextField("Codigo de recurso");
         DatePicker fechaPrestamo = new DatePicker("Fecha de prestamo");
         DatePicker fechaDevolucion = new DatePicker("Fecha de devolucion");
+
+        codigoR.setValue(parameter);
+        codigoR.setReadOnly(true);
+
+        // Validar que la fecha de prestamo sea antes que la fecha de devolucion
         fechaDevolucion.addValueChangeListener(event -> {
             fechaDevolucion.setErrorMessage(null);
-            if (fechaPrestamo.getValue().isBefore(fechaDevolucion.getValue())) {
+            if (fechaPrestamo.getValue() != null && fechaPrestamo.getValue().isBefore(fechaDevolucion.getValue())) {
                 fechaDevolucion.setInvalid(false);
             } else {
                 fechaDevolucion.setErrorMessage("La fecha de prestamo debe ser antes de la fecha de devolucion");
@@ -63,7 +80,7 @@ public class PrestamoView extends VerticalLayout {
 
         fechaPrestamo.addValueChangeListener(event -> {
             fechaPrestamo.setErrorMessage(null);
-            if (fechaPrestamo.getValue().isBefore(fechaDevolucion.getValue())) {
+            if (fechaDevolucion.getValue() != null && fechaPrestamo.getValue().isBefore(fechaDevolucion.getValue())) {
                 fechaPrestamo.setInvalid(false);
             } else {
                 fechaPrestamo.setErrorMessage("La fecha de prestamo debe ser antes de la fecha de devolucion");
@@ -71,39 +88,32 @@ public class PrestamoView extends VerticalLayout {
             }
         });
 
-
         Button button = new Button("Guardar");
         button.addClickListener(clickEvent -> {
             // Validar recurso
-            if (recursoService.getRecurso(codigoR.getValue()) == null){
+            if (recursoService.getRecurso(codigoR.getValue()) == null) {
                 // Recurso no existe, mostrar mensaje de error
                 Notification.show("El recurso ingresado no existe", 3000, Position.TOP_CENTER);
                 return;
             }
 
-            /// Validar usuario
-            if (usuarioService.getUsuarioByCarnet(carnet.getValue()) == null){
+            // Validar usuario
+            Usuario usuario = usuarioService.getUsuarioByCarnet(carnet.getValue());
+            if (usuario == null) {
                 // Usuario no existe, mostrar mensaje de error
                 Notification.show("El usuario ingresado no existe", 3000, Position.TOP_CENTER);
                 return;
-            }
-            else{
-                Usuario user = usuarioService.getUsuarioByCarnet(carnet.getValue());
-                if (user.activo == 0){ 
-                    // Usuario no existe, mostrar mensaje de error
-                    Notification.show("El usuario ingresado no esta activo", 3000, Position.TOP_CENTER);
-                    return;
-                }
-            }
-
-            // Validar fechas de prestamo y devolucion en caso de que no se hayan ingresado
-            if (fechaPrestamo.getValue() == null || fechaDevolucion.getValue() == null){
-                Notification.show("Debe ingresar la fecha de prestamo y devolucion", 3000, Position.TOP_CENTER);
+            } else if (usuario.getActivo() == 0) {
+                // Usuario no está activo, mostrar mensaje de error
+                Notification.show("El usuario ingresado no está activo", 3000, Position.TOP_CENTER);
                 return;
             }
 
-            // Encontrar el usuario con carnet
-            Usuario usuario = usuarioService.getUsuarioByCarnet(carnet.getValue());
+            // Validar fechas de prestamo y devolucion
+            if (fechaPrestamo.getValue() == null || fechaDevolucion.getValue() == null) {
+                Notification.show("Debe ingresar la fecha de prestamo y devolucion", 3000, Position.TOP_CENTER);
+                return;
+            }
 
             // Encontrar el recurso con el código
             Recurso recurso = recursoService.getRecurso(codigoR.getValue());
@@ -113,26 +123,23 @@ public class PrestamoView extends VerticalLayout {
             prestamo.setUsuario(usuario);
             prestamo.setRecurso(recurso);
 
-            //Obtener el valor de las fechas guardarlas como string y luego convertirlas a Date
-
-            String fechaPrestamoString = fechaPrestamo.getValue().toString();
-            String fechaDevolucionString = fechaDevolucion.getValue().toString();
-
-            //Convertir las fechas a Date
+            // Convertir las fechas a Date
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
             try {
-                Date fechaPrestamoDate = formato.parse(fechaPrestamoString);
-                Date fechaDevolucionDate = formato.parse(fechaDevolucionString);
-            
+                Date fechaPrestamoDate = formato.parse(fechaPrestamo.getValue().toString());
+                Date fechaDevolucionDate = formato.parse(fechaDevolucion.getValue().toString());
+
                 prestamo.setFecha(fechaPrestamoDate);
                 prestamo.setDevolucion(fechaDevolucionDate);
             } catch (ParseException e) {
-                // Handle the ParseException here
+                // Manejar ParseException
                 e.printStackTrace();
-            } 
+                Notification.show("Error al parsear las fechas", 3000, Position.TOP_CENTER);
+                return;
+            }
+
             // Guardar el préstamo
             prestamoService.savePrestamo(prestamo);
-
             Notification.show("Prestamo guardado", 3000, Position.TOP_CENTER);
         });
 
