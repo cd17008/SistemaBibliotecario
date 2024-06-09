@@ -18,83 +18,94 @@ import com.vaadin.flow.router.Route;
 import java.util.Arrays;
 import java.util.List;
 
- @Route(value = "recursos")
- @PageTitle(value = "Recursos | Biblioteca Central de Centro America")
- public class RecursoView extends VerticalLayout {
-     private RecursoService recursoService;
-        Grid<Recurso> tablaRecursos = new Grid<>(Recurso.class);
-        TextField campoBusqueda = new TextField();
-        NavBar navegacion = new NavBar();
+@Route(value = "recursos")
+@PageTitle(value = "Recursos | Biblioteca Central de Centro America")
+public class RecursoView extends VerticalLayout {
+    private RecursoService recursoService;
+    Grid<Recurso> tablaRecursos = new Grid<>(Recurso.class);
+    TextField campoBusqueda = new TextField();
+    NavBar navegacion = new NavBar();
 
-        public RecursoView(RecursoService recursoService) {
-            setClassName("login");
-            this.recursoService = recursoService;
-            List<Recurso> recursos = recursoService.getRecursos();
-            H1 subtitulo = new H1("Recursos");
-            subtitulo.getStyle().setColor("white");
-            add(navegacion, subtitulo);
-
-            List<Grid.Column<Recurso>> columnas = Arrays.asList(
-                    tablaRecursos.getColumnByKey("id"),
-                    tablaRecursos.getColumnByKey("Titulo"),
-                    tablaRecursos.getColumnByKey("Autor"),
-                    tablaRecursos.getColumnByKey("Subcategoria"),
-                    tablaRecursos.getColumnByKey("Descripcion"),
-                    tablaRecursos.getColumnByKey("Idioma"),
-                    tablaRecursos.getColumnByKey("Portada"),
-                    tablaRecursos.getColumnByKey("Cantidad"));
-            Grid.Column<Recurso> idColumn = tablaRecursos.getColumnByKey("id");
-            idColumn.setVisible(false);
-            tablaRecursos.setItems(recursos);
-            tablaRecursos.setColumnOrder(columnas);
-            tablaRecursos.addComponentColumn(recurso -> {
-                Icon editar = new Icon(VaadinIcon.EDIT);
-
-                Icon detalles = new Icon(VaadinIcon.LIST_UL);
-
-                Icon eliminar = new Icon(VaadinIcon.TRASH);
-
-                HorizontalLayout layoutBotones = new HorizontalLayout(detalles, editar, eliminar);
-                layoutBotones.setSizeFull();
-                layoutBotones.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
-                layoutBotones.setSpacing(true);
-
-                VerticalLayout cajabotones = new VerticalLayout(layoutBotones);
-                cajabotones.setAlignItems(Alignment.CENTER);
-                cajabotones.setPadding(false);
-                cajabotones.setSpacing(false);
-
-                return cajabotones;
-            }).setHeader("Acciones").setAutoWidth(true);
-            tablaRecursos.getElement().getThemeList().add("dark");
-            tablaRecursos.getElement().getStyle().setWidth("80%");
-            tablaRecursos.getStyle().set("align-self", "center");
-            tablaRecursos.getStyle().setMargin("3%");
-            add(busqueda(), tablaRecursos);
-            actulizarTabla();
+    public RecursoView(RecursoService recursoService) {
+        setClassName("login");
+        this.recursoService = recursoService;
+        if (recursoService == null) {
+            throw new IllegalArgumentException("RecursoService no puede ser null");
         }
 
-        private HorizontalLayout busqueda() {
-            campoBusqueda.setPlaceholder("Escribe un nombre");
-            campoBusqueda.setValueChangeMode(ValueChangeMode.LAZY);
-            campoBusqueda.addValueChangeListener(event -> actulizarTabla());
-            campoBusqueda.getStyle().setBorder("1px solid #ccc");
-            campoBusqueda.getStyle().set("border-radius", "5px");
-            campoBusqueda.getStyle().setBackgroundColor("white");
-            Icon vaciar = new Icon(VaadinIcon.CLOSE_CIRCLE_O);
-
-            vaciar.addClickListener(e -> limpiar());
-
-            var buscar = new HorizontalLayout(campoBusqueda, vaciar);
-            return buscar;
+        List<Recurso> recursos = recursoService.getRecursos();
+        if (recursos == null) {
+            throw new IllegalStateException("El servicio de recursos devolvió null");
         }
+        H1 subtitulo = new H1("Recursos");
+        subtitulo.getStyle().setColor("white");
+        add(navegacion, subtitulo);
 
-        private void actulizarTabla() {
-            tablaRecursos.setItems(recursoService.findRecursos(campoBusqueda.getValue()));
-        }
+        List<Grid.Column<Recurso>> columnas = Arrays.asList(
+                tablaRecursos.getColumnByKey("id"),
+                tablaRecursos.getColumnByKey("titulo"),
+                tablaRecursos.getColumnByKey("autor"),
+                tablaRecursos.getColumnByKey("subcategoria"),
+                tablaRecursos.getColumnByKey("descripcion"),
+                tablaRecursos.getColumnByKey("idioma"),
+                tablaRecursos.getColumnByKey("cover"),
+                tablaRecursos.getColumnByKey("cantidad"),
+                tablaRecursos.getColumnByKey("precio"),
+                tablaRecursos.getColumnByKey("calificacion"),
+                tablaRecursos.getColumnByKey("publicacion"),
+                tablaRecursos.getColumnByKey("editorial"));
 
-        private void limpiar() {
-            campoBusqueda.clear();
-        }
+        Grid.Column<Recurso> idColumn = tablaRecursos.getColumnByKey("id");
+        idColumn.setVisible(false);
+        tablaRecursos.setItems(recursos);
+        tablaRecursos.setColumnOrder(columnas);
+        tablaRecursos.addComponentColumn(recurso -> {
+            Icon editar = new Icon(VaadinIcon.EDIT);
+
+            Icon detalles = new Icon(VaadinIcon.LIST_UL);
+
+            Icon eliminar = new Icon(VaadinIcon.TRASH);
+
+            HorizontalLayout layoutBotones = new HorizontalLayout(detalles, editar, eliminar);
+            layoutBotones.setSizeFull();
+            layoutBotones.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+            layoutBotones.setSpacing(true);
+
+            VerticalLayout cajabotones = new VerticalLayout(layoutBotones);
+            cajabotones.setAlignItems(Alignment.CENTER);
+            cajabotones.setPadding(false);
+            cajabotones.setSpacing(false);
+
+            return cajabotones;
+        }).setHeader("Acciones").setAutoWidth(true);
+        tablaRecursos.getElement().getThemeList().add("dark");
+        tablaRecursos.getElement().getStyle().setWidth("80%");
+        tablaRecursos.getStyle().set("align-self", "center");
+        tablaRecursos.getStyle().setMargin("3%");
+        add(busqueda(), tablaRecursos);
+        actulizarTabla();
     }
 
+    private HorizontalLayout busqueda() {
+        campoBusqueda.setPlaceholder("Escribe un nombre");
+        campoBusqueda.setValueChangeMode(ValueChangeMode.LAZY);
+        campoBusqueda.addValueChangeListener(event -> actulizarTabla());
+        campoBusqueda.getStyle().setBorder("1px solid #ccc");
+        campoBusqueda.getStyle().set("border-radius", "5px");
+        campoBusqueda.getStyle().setBackgroundColor("white");
+        Icon vaciar = new Icon(VaadinIcon.CLOSE_CIRCLE_O);
+
+        vaciar.addClickListener(e -> limpiar());
+
+        var buscar = new HorizontalLayout(campoBusqueda, vaciar);
+        return buscar;
+    }
+
+    private void actulizarTabla() {
+        tablaRecursos.setItems(recursoService.findRecursos(campoBusqueda.getValue()));
+    }
+
+    private void limpiar() {
+        campoBusqueda.clear();
+    }
+}

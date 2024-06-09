@@ -19,6 +19,7 @@ import com.ues.fia.bad115.service.UsuarioService;
 @PageTitle(value = "Menu Principal | Biblioteca Central de Centro America")
 
 public class PrincipalView extends VerticalLayout {
+    @SuppressWarnings("unused")
     private UsuarioService usuarioService;
     String email = (String) VaadinSession.getCurrent().getSession().getAttribute("username");
     String nombre;
@@ -47,16 +48,33 @@ public class PrincipalView extends VerticalLayout {
         Button recursosButton = new Button("RECURSOS");
         Button prestamosButton = new Button("PRESTAMOS");
         Button morasButton = new Button("MORAS");
+        Button reporButton = new Button("REPORTES");
 
         // Estilo para los botones
         usuariosButton.addClassName("main-button");
+        usuariosButton.addClickListener(e -> {
+            usuariosButton.getUI().ifPresent(ui -> ui.navigate("usuarios"));
+        });
         recursosButton.addClassName("main-button");
+        recursosButton.addClickListener(e -> {
+            recursosButton.getUI().ifPresent(ui -> ui.navigate("recursos"));
+        });
         prestamosButton.addClassName("main-button");
+        prestamosButton.addClickListener(e -> {
+            prestamosButton.getUI().ifPresent(ui -> ui.navigate("prestamos"));
+        });
         morasButton.addClassName("main-button");
+        morasButton.addClickListener(e -> {
+            morasButton.getUI().ifPresent(ui -> ui.navigate("moras"));
+        });
+        reporButton.addClassName("main-button");
+        reporButton.addClickListener(e -> {
+            reporButton.getUI().ifPresent(ui -> ui.navigate("reportes"));
+        });
 
         // Layout de botones
         HorizontalLayout buttonsLayout = new HorizontalLayout(usuariosButton, recursosButton, prestamosButton,
-                morasButton);
+                morasButton, reporButton);
         buttonsLayout.setJustifyContentMode(JustifyContentMode.CENTER);
         buttonsLayout.addClassName("main-buttons");
 

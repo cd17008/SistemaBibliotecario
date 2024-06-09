@@ -39,8 +39,12 @@ public class CategoriaView extends VerticalLayout {
                 tablaCategorias.getColumnByKey("id"),
                 tablaCategorias.getColumnByKey("nombre"),
                 tablaCategorias.getColumnByKey("disponible"),
+                tablaCategorias.addColumn(categoria -> categoria.getDisponible() == 1 ? "Disponible" : "No disponible")
+                        .setHeader("Prestamo"),
                 tablaCategorias.getColumnByKey("descripcion"));
         Grid.Column<Categoria> idColumn = tablaCategorias.getColumnByKey("id");
+        Grid.Column<Categoria> disponibleColumn = tablaCategorias.getColumnByKey("disponible");
+        disponibleColumn.setVisible(false);
         idColumn.setVisible(false);
         tablaCategorias.setItems(categorias);
         tablaCategorias.setColumnOrder(columnas);

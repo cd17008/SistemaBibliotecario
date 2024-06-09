@@ -1,7 +1,6 @@
 package com.ues.fia.bad115.component;
 
 import java.util.concurrent.ScheduledExecutorService;
-import com.ues.fia.bad115.service.UsuarioService;
 import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -17,16 +16,13 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 @CssImport("styles.css")
 public class NavBar extends VerticalLayout {
 
-    private UsuarioService usuarioService;
-
     private NativeLabel usuario;
     private ScheduledExecutorService scheduler;
     private Icon logOut = new Icon(VaadinIcon.SIGN_OUT);
 
     public NavBar() {
-        String username = (String) VaadinSession.getCurrent().getSession().getAttribute("username");
         setClassName("navbar");
-        setWidth("100vw");
+        setWidth("100%");
         getStyle().set("background-color", "#1c2738");
 
         H3 titulo = new H3("BIBLIOTECA CENTRAL DE CENTRO AMERICA");
@@ -67,9 +63,19 @@ public class NavBar extends VerticalLayout {
         recursos.getStyle().set("color", "white");
         usuarios.getStyle().set("color", "white");
         autores.getStyle().set("color", "white");
-
+        Anchor login = new Anchor("login", "Iniciar Sesión");
+        login.getStyle().set("color", "#1c2738");
+        login.getStyle().set("border", "1px solid white");
+        login.getStyle().set("border-radius", "5px");
+        login.getStyle().set("background-color", "white");
+        login.getStyle().set("padding", "5px");
         HorizontalLayout toolbar = new HorizontalLayout(home, recursos, usuarios, autores);
-        HorizontalLayout sesion = new HorizontalLayout(usuario, logOut);
+        HorizontalLayout sesion;
+        if (username == null) {
+            sesion = new HorizontalLayout(login);
+        } else {
+            sesion = new HorizontalLayout(usuario, logOut);
+        }
         toolbar.setSpacing(true);
         toolbar.getStyle().set("margin-right", "10px");
         sesion.setSpacing(true);

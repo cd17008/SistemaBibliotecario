@@ -39,9 +39,13 @@ public class SubcategoriaView extends VerticalLayout {
                 tablaSubcategorias.getColumnByKey("id"),
                 tablaSubcategorias.getColumnByKey("nombre"),
                 tablaSubcategorias.getColumnByKey("categoria"),
+                tablaSubcategorias.addColumn(subcategoria -> subcategoria.getCategoria().getNombre())
+                        .setHeader("Categoria"),
                 tablaSubcategorias.getColumnByKey("descripcion"));
         Grid.Column<Subcategoria> idColumn = tablaSubcategorias.getColumnByKey("id");
         idColumn.setVisible(false);
+        Grid.Column<Subcategoria> categoriaColumn = tablaSubcategorias.getColumnByKey("categoria");
+        categoriaColumn.setVisible(false);
         tablaSubcategorias.setItems(categorias);
         tablaSubcategorias.setColumnOrder(columnas);
         tablaSubcategorias.addComponentColumn(subcategoria -> {
