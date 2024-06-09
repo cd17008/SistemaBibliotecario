@@ -47,6 +47,8 @@ public class UsuarioView extends VerticalLayout {
     private PrestamoService prestamoService;
     private MoraService moraService;
     Notification notification = new Notification();
+    Grid<Prestamo> tablaPrestamos = new Grid<>(Prestamo.class);
+    Grid<Mora> tablaMoras = new Grid<>(Mora.class);
 
     public UsuarioView(UsuarioService usuarioService, PrestamoService prestamoService, MoraService moraService) {
         setClassName("login");
@@ -121,7 +123,7 @@ public class UsuarioView extends VerticalLayout {
     }
 
     private VerticalLayout prestamos(int id) {
-        Grid<Prestamo> tablaPrestamos = new Grid<>(Prestamo.class);
+
         List<Prestamo> prestamos = prestamoService.getPrestamosByUsuario(id);
         DataProvider<Prestamo, Void> dataProvider = DataProvider.fromCallbacks(
                 query -> {
@@ -163,11 +165,22 @@ public class UsuarioView extends VerticalLayout {
                 detallesPrestramos(prestamo);
             });
 
-            HorizontalLayout layoutBotones = new HorizontalLayout(detalles);
+            Icon devolver = new Icon(VaadinIcon.CHECK);
+            devolver.getStyle().set("cursor", "pointer");
+            devolver.addClickListener(e -> {
+                if (prestamo.getDevolucion() == null) {
+                    prestamo.setDevolucion(java.sql.Timestamp.valueOf(java.time.LocalDateTime.now()));
+                    prestamoService.savePrestamo(prestamo);
+                    Notification.show("Recurso devuelto", 3000, Notification.Position.BOTTOM_START);
+                }
+            });
+            if (prestamo.getDevolucion() != null) {
+                devolver.setVisible(false);
+            }
+            HorizontalLayout layoutBotones = new HorizontalLayout(detalles, devolver);
             layoutBotones.setSizeFull();
             layoutBotones.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
             layoutBotones.setSpacing(true);
-
             VerticalLayout cajabotones = new VerticalLayout(layoutBotones);
             cajabotones.setAlignItems(Alignment.CENTER);
             cajabotones.setPadding(false);
@@ -189,7 +202,7 @@ public class UsuarioView extends VerticalLayout {
                 morasUsuario.add(mora);
             }
         }
-        Grid<Mora> tablaMoras = new Grid<>(Mora.class);
+
         DataProvider<Mora, Void> dataProvider = DataProvider.fromCallbacks(
                 query -> {
                     return morasUsuario.stream();
@@ -229,8 +242,21 @@ public class UsuarioView extends VerticalLayout {
             detalles.addClickListener(e -> {
                 detallesMoras(mora);
             });
+            Icon pagar = new Icon(VaadinIcon.CHECK);
+            pagar.getStyle().set("cursor", "pointer");
+            pagar.addClickListener(e -> {
+                if (mora.getEstado() == 1) {
+                    mora.setEstado(0);
+                    moraService.saveMora(mora);
+                    Notification.show("Mora pagada", 3000, Notification.Position.BOTTOM_START);
+                }
+                actulizarTablaMoras(moras);
+            });
+            if (mora.getEstado() == 0) {
+                pagar.setVisible(false);
+            }
 
-            HorizontalLayout layoutBotones = new HorizontalLayout(detalles);
+            HorizontalLayout layoutBotones = new HorizontalLayout(detalles, pagar);
             layoutBotones.setSizeFull();
             layoutBotones.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
             layoutBotones.setSpacing(true);
@@ -304,6 +330,14 @@ public class UsuarioView extends VerticalLayout {
         layout.add(prestamos);
         dialog.add(layout, cerrar);
         dialog.open();
+    }
+
+    private void actulizarTablaPrestamos(List<Prestamo> prestamos) {
+        tablaPrestamos.setItems(prestamos);
+    }
+
+    private void actulizarTablaMoras(List<Mora> moras) {
+        tablaPrestamos.setItems(moras);
     }
 
 }
