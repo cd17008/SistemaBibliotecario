@@ -66,31 +66,31 @@ public class PrestamoView extends VerticalLayout implements HasUrlParameter<Stri
         TextField carnet = new TextField("Carnet de usuario");
         TextField codigoR = new TextField("Codigo de recurso");
         DatePicker fechaPrestamo = new DatePicker("Fecha de prestamo");
-        DatePicker fechaDevolucion = new DatePicker("Fecha de devolucion");
+        //DatePicker fechaDevolucion = new DatePicker("Fecha de devolucion");
 
         codigoR.setValue(parameter);
         codigoR.setReadOnly(true);
 
         // Validar que la fecha de prestamo sea antes que la fecha de devolucion
-        fechaDevolucion.addValueChangeListener(event -> {
-            fechaDevolucion.setErrorMessage(null);
-            if (fechaPrestamo.getValue() != null && fechaPrestamo.getValue().isBefore(fechaDevolucion.getValue())) {
-                fechaDevolucion.setInvalid(false);
-            } else {
-                fechaDevolucion.setErrorMessage("La fecha de prestamo debe ser antes de la fecha de devolucion");
-                fechaDevolucion.setInvalid(true);
-            }
-        });
+        // fechaDevolucion.addValueChangeListener(event -> {
+        //     fechaDevolucion.setErrorMessage(null);
+        //     if (fechaPrestamo.getValue() != null && fechaPrestamo.getValue().isBefore(fechaDevolucion.getValue())) {
+        //         fechaDevolucion.setInvalid(false);
+        //     } else {
+        //         fechaDevolucion.setErrorMessage("La fecha de prestamo debe ser antes de la fecha de devolucion");
+        //         fechaDevolucion.setInvalid(true);
+        //     }
+        // });
 
-        fechaPrestamo.addValueChangeListener(event -> {
-            fechaPrestamo.setErrorMessage(null);
-            if (fechaDevolucion.getValue() != null && fechaPrestamo.getValue().isBefore(fechaDevolucion.getValue())) {
-                fechaPrestamo.setInvalid(false);
-            } else {
-                fechaPrestamo.setErrorMessage("La fecha de prestamo debe ser antes de la fecha de devolucion");
-                fechaPrestamo.setInvalid(true);
-            }
-        });
+        // fechaPrestamo.addValueChangeListener(event -> {
+        //     fechaPrestamo.setErrorMessage(null);
+        //     if (fechaDevolucion.getValue() != null && fechaPrestamo.getValue().isBefore(fechaDevolucion.getValue())) {
+        //         fechaPrestamo.setInvalid(false);
+        //     } else {
+        //         fechaPrestamo.setErrorMessage("La fecha de prestamo debe ser antes de la fecha de devolucion");
+        //         fechaPrestamo.setInvalid(true);
+        //     }
+        // });
 
         Button button = new Button("Guardar");
         button.addClickListener(clickEvent -> {
@@ -114,8 +114,8 @@ public class PrestamoView extends VerticalLayout implements HasUrlParameter<Stri
             }
 
             // Validar fechas de prestamo y devolucion
-            if (fechaPrestamo.getValue() == null || fechaDevolucion.getValue() == null) {
-                Notification.show("Debe ingresar la fecha de prestamo y devolucion", 3000, Position.TOP_CENTER);
+            if (fechaPrestamo.getValue() == null) {
+                Notification.show("Debe ingresar la fecha de prestamo", 3000, Position.TOP_CENTER);
                 return;
             }
 
@@ -131,10 +131,10 @@ public class PrestamoView extends VerticalLayout implements HasUrlParameter<Stri
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
             try {
                 Date fechaPrestamoDate = formato.parse(fechaPrestamo.getValue().toString());
-                Date fechaDevolucionDate = formato.parse(fechaDevolucion.getValue().toString());
+                //Date fechaDevolucionDate = formato.parse(fechaDevolucion.getValue().toString());
 
                 prestamo.setFecha(fechaPrestamoDate);
-                prestamo.setDevolucion(fechaDevolucionDate);
+                //prestamo.setDevolucion(fechaDevolucionDate);
             } catch (ParseException e) {
                 // Manejar ParseException
                 e.printStackTrace();
@@ -148,12 +148,15 @@ public class PrestamoView extends VerticalLayout implements HasUrlParameter<Stri
         });
 
         FormLayout formLayout = new FormLayout();
-        formLayout.add(codigoR, carnet, fechaPrestamo, fechaDevolucion, button);
+        formLayout.add(codigoR, carnet, fechaPrestamo, button);
         formLayout.setColspan(codigoR, 2);
+        formLayout.setColspan(carnet, 2);
+        formLayout.setColspan(fechaPrestamo, 2);
+        formLayout.setColspan(button, 2);
         formLayout.setResponsiveSteps(
                 new FormLayout.ResponsiveStep("0", 1),
                 new FormLayout.ResponsiveStep("500px", 3));
-        formLayout.getStyle().set("padding-left", "15em");
+        formLayout.getStyle().set("padding-left", "30em");
         formLayout.getStyle().set("padding-right", "15em");
         formLayout.getElement().getThemeList().add("dark");
         return formLayout;
