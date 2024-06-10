@@ -103,6 +103,9 @@ public class RecursoView extends VerticalLayout {
             prestamo.addClickListener(e -> {
                 UI.getCurrent().navigate(PrestamoView.class, recurso.getId());
             });
+            if (recurso.getSubcategoria().getCategoria().getDisponible() == 0) {
+                prestamo.setVisible(false);
+            }
             HorizontalLayout layoutBotones = new HorizontalLayout(detalles, prestamo);
             layoutBotones.setSizeFull();
             layoutBotones.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
